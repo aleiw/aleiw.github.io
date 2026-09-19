@@ -784,6 +784,58 @@
   .heatmap-day-labels { display: flex; flex-direction: column; gap: 3px; font-size: 9px; color: var(--text-light); padding-top: 16px; }
   .heatmap-day-labels div { height: 20px; line-height: 20px; }
 
+  /* ===== EXAM IMAGE UPLOAD ===== */
+  .exam-upload-area {
+    margin-top: 16px; padding: 16px; border: 2px dashed var(--border); border-radius: 12px;
+    text-align: center; cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .exam-upload-area:hover { border-color: var(--primary-light); background: #faf8f3; }
+  .exam-upload-area.has-files { border-style: solid; border-color: var(--success); }
+  .exam-upload-icon { font-size: 28px; margin-bottom: 6px; }
+  .exam-upload-text { font-size: 13px; color: var(--text-light); }
+  .exam-upload-count { font-size: 12px; color: var(--success); font-weight: 600; margin-top: 4px; }
+  .exam-upload-preview {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; justify-content: center;
+  }
+  .exam-upload-thumb {
+    position: relative; width: 60px; height: 60px; border-radius: 8px; overflow: hidden;
+    border: 2px solid var(--border); cursor: pointer;
+  }
+  .exam-upload-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .exam-upload-thumb .remove-x {
+    position: absolute; top: 2px; right: 2px; width: 18px; height: 18px;
+    background: rgba(0,0,0,0.6); color: #fff; border-radius: 50%; font-size: 11px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; border: none;
+  }
+  .exam-img-link {
+    cursor: pointer; color: var(--primary-light); text-decoration: underline; font-size: 12px;
+  }
+  .exam-img-link:hover { color: var(--primary); }
+
+  /* ===== IMAGE MODAL ===== */
+  .img-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); z-index: 99998; display: none;
+    align-items: center; justify-content: center; flex-direction: column;
+  }
+  .img-modal.show { display: flex; }
+  .img-modal img { max-width: 90vw; max-height: 80vh; border-radius: 8px; box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+  .img-modal-close {
+    position: fixed; top: 16px; right: 20px; width: 40px; height: 40px;
+    background: rgba(255,255,255,0.15); color: #fff; border: none; border-radius: 50%;
+    font-size: 20px; cursor: pointer; z-index: 99999;
+  }
+  .img-modal-close:hover { background: rgba(255,255,255,0.3); }
+  .img-modal-nav {
+    position: fixed; top: 50%; transform: translateY(-50%); width: 44px; height: 44px;
+    background: rgba(255,255,255,0.15); color: #fff; border: none; border-radius: 50%;
+    font-size: 22px; cursor: pointer; z-index: 99999; display: flex; align-items: center; justify-content: center;
+  }
+  .img-modal-nav:hover { background: rgba(255,255,255,0.3); }
+  .img-modal-prev { left: 16px; }
+  .img-modal-next { right: 16px; }
+  .img-modal-counter { color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 12px; }
+
   /* ===== PASSWORD LOCK ===== */
   .pwd-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -1928,6 +1980,13 @@ function lockPage(){localStorage.removeItem('pwd_ok');var o=document.getElementB
           </select>
         </div>
         <div id="score-tracker-list"></div>
+        <div class="exam-upload-area" id="exam-upload-area" onclick="document.getElementById('exam-file-input').click()">
+          <div class="exam-upload-icon">📷</div>
+          <div class="exam-upload-text">点击上传试卷/默写照片（可选）</div>
+          <div class="exam-upload-count" id="exam-upload-count"></div>
+          <div class="exam-upload-preview" id="exam-upload-preview"></div>
+          <input type="file" id="exam-file-input" accept="image/*" multiple style="display:none" onchange="handleExamFiles(this.files)">
+        </div>
         <div style="margin-top:16px; display:flex; gap:10px;">
           <button class="action-btn primary" onclick="saveExamRecord()">保存成绩记录</button>
           <button class="action-btn" onclick="clearScoreForm()">清空录入</button>
@@ -2128,8 +2187,16 @@ function lockPage(){localStorage.removeItem('pwd_ok');var o=document.getElementB
   <div id="progress-sections"></div>
 </div>
 
+<!-- ===== IMAGE VIEWER MODAL ===== -->
+<div class="img-modal" id="img-modal">
+  <button class="img-modal-close" onclick="closeImgModal()">✕</button>
+  <button class="img-modal-nav img-modal-prev" onclick="navImg(-1)">‹</button>
+  <img id="img-modal-img" src="">
+  <div class="img-modal-counter" id="img-modal-counter"></div>
+  <button class="img-modal-nav img-modal-next" onclick="navImg(1)">›</button>
+</div>
+
 <script>
-// ===== 学科标签切换 =====
 function showSubject(e, id) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.subject-panel').forEach(p => p.classList.remove('active'));
@@ -2228,6 +2295,64 @@ function getExamRecords() {
   return JSON.parse(localStorage.getItem('examRecords') || '[]');
 }
 
+var pendingExamImages = [];
+
+function handleExamFiles(files) {
+  var remaining = files.length;
+  Array.prototype.forEach.call(files, function(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      compressImage(e.target.result, 800, 0.6, function(compressed) {
+        pendingExamImages.push(compressed);
+        remaining--;
+        if (remaining === 0) updateUploadPreview();
+      });
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function compressImage(dataUrl, maxDim, quality, callback) {
+  var img = new Image();
+  img.onload = function() {
+    var canvas = document.createElement('canvas');
+    var w = img.width, h = img.height;
+    if (w > maxDim || h > maxDim) {
+      if (w > h) { h = h * maxDim / w; w = maxDim; }
+      else { w = w * maxDim / h; h = maxDim; }
+    }
+    canvas.width = w; canvas.height = h;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+    callback(canvas.toDataURL('image/jpeg', quality));
+  };
+  img.src = dataUrl;
+}
+
+function updateUploadPreview() {
+  var area = document.getElementById('exam-upload-area');
+  var preview = document.getElementById('exam-upload-preview');
+  var count = document.getElementById('exam-upload-count');
+  if (pendingExamImages.length === 0) {
+    area.classList.remove('has-files');
+    preview.innerHTML = '';
+    count.textContent = '';
+    return;
+  }
+  area.classList.add('has-files');
+  count.textContent = pendingExamImages.length + ' 张照片已选择';
+  var html = '';
+  pendingExamImages.forEach(function(img, i) {
+    html += '<div class="exam-upload-thumb"><img src="' + img + '" onclick="event.stopPropagation()"><button class="remove-x" onclick="event.stopPropagation();removePendingImage(' + i + ')">✕</button></div>';
+  });
+  preview.innerHTML = html;
+}
+
+function removePendingImage(idx) {
+  pendingExamImages.splice(idx, 1);
+  updateUploadPreview();
+}
+
 function saveExamRecord() {
   var date = document.getElementById('exam-date').value;
   var type = document.getElementById('exam-type').value;
@@ -2243,9 +2368,18 @@ function saveExamRecord() {
   });
   if (!hasScore) { alert('请至少录入一科成绩'); return; }
   var records = getExamRecords();
-  records.push({ date: date, type: type, scores: scores });
+  var record = { date: date, type: type, scores: scores, images: [] };
+  if (pendingExamImages.length > 0) {
+    record.images = pendingExamImages.slice();
+  }
+  records.push(record);
   records.sort(function(a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
-  localStorage.setItem('examRecords', JSON.stringify(records));
+  try {
+    localStorage.setItem('examRecords', JSON.stringify(records));
+  } catch(e) {
+      alert('存储空间不足，请删除一些旧记录后再试。');
+      return;
+    }
   var tip = document.getElementById('score-saved-tip');
   tip.style.display = 'block';
   setTimeout(function() { tip.style.display = 'none'; }, 2500);
@@ -2257,6 +2391,8 @@ function clearScoreForm() {
     var input = document.getElementById('score-' + i);
     if (input) { input.value = ''; updateScoreRow(i); }
   });
+  pendingExamImages = [];
+  updateUploadPreview();
 }
 
 function renderScoreHistory() {
@@ -2270,7 +2406,7 @@ function renderScoreHistory() {
   var html = '<div class="score-history-wrap"><table class="score-history-table"><thead><tr>';
   html += '<th>日期</th><th>类型</th>';
   subjects.forEach(function(s) { html += '<th>' + s + '</th>'; });
-  html += '<th>操作</th></tr></thead><tbody>';
+  html += '<th>试卷</th><th>操作</th></tr></thead><tbody>';
   for (var i = records.length - 1; i >= 0; i--) {
     var r = records[i];
     html += '<tr><td>' + r.date + '</td><td>' + r.type + '</td>';
@@ -2283,6 +2419,11 @@ function renderScoreHistory() {
       }
       html += '<td style="color:' + color + '; font-weight:600;">' + (val !== undefined ? val : '—') + '</td>';
     });
+    if (r.images && r.images.length > 0) {
+      html += '<td><span class="exam-img-link" onclick="openImgModal(' + i + ')">📷 ' + r.images.length + '张</span></td>';
+    } else {
+      html += '<td style="color:var(--text-light);">—</td>';
+    }
     html += '<td><button class="del-btn" onclick="deleteExamRecord(' + i + ')">删除</button></td></tr>';
   }
   html += '</tbody></table></div>';
@@ -2296,6 +2437,50 @@ function deleteExamRecord(idx) {
   localStorage.setItem('examRecords', JSON.stringify(records));
   renderScoreHistory();
 }
+
+var imgModalState = { recordIdx: -1, current: 0 };
+
+function openImgModal(recordIdx) {
+  var records = getExamRecords();
+  var r = records[recordIdx];
+  if (!r || !r.images || r.images.length === 0) return;
+  imgModalState.recordIdx = recordIdx;
+  imgModalState.current = 0;
+  showImgModal();
+}
+
+function showImgModal() {
+  var records = getExamRecords();
+  var r = records[imgModalState.recordIdx];
+  if (!r) return;
+  var images = r.images || [];
+  if (images.length === 0) return;
+  document.getElementById('img-modal-img').src = images[imgModalState.current];
+  document.getElementById('img-modal-counter').textContent = (imgModalState.current + 1) + ' / ' + images.length;
+  document.getElementById('img-modal').classList.add('show');
+}
+
+function closeImgModal() {
+  document.getElementById('img-modal').classList.remove('show');
+}
+
+function navImg(dir) {
+  var records = getExamRecords();
+  var r = records[imgModalState.recordIdx];
+  if (!r) return;
+  var total = r.images.length;
+  imgModalState.current = (imgModalState.current + dir + total) % total;
+  showImgModal();
+}
+
+document.addEventListener('keydown', function(e) {
+  var modal = document.getElementById('img-modal');
+  if (modal && modal.classList.contains('show')) {
+    if (e.key === 'Escape') closeImgModal();
+    if (e.key === 'ArrowLeft') navImg(-1);
+    if (e.key === 'ArrowRight') navImg(1);
+  }
+});
 
 function renderTrendChart() {
   var records = getExamRecords();
