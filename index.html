@@ -696,6 +696,93 @@
   .section-progress-fill {
     height: 100%; background: var(--success); border-radius: 3px; transition: width 0.4s;
   }
+
+  /* ===== SCORE TABS ===== */
+  .score-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .score-tab {
+    padding: 8px 18px; border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 13px; font-family: inherit; background: var(--card-bg);
+    color: var(--text); transition: all 0.2s;
+  }
+  .score-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .score-tab:hover:not(.active) { border-color: var(--primary-light); }
+  .score-tab-content { display: none; }
+  .score-tab-content.active { display: block; }
+  .score-date-input, .score-type-select {
+    padding: 6px 12px; border: 2px solid var(--border); border-radius: 8px;
+    font-size: 13px; font-family: inherit; color: var(--text);
+  }
+  .score-date-input:focus, .score-type-select:focus { border-color: var(--primary-light); outline: none; }
+
+  /* ===== SCORE HISTORY TABLE ===== */
+  .score-history-wrap { overflow-x: auto; }
+  .score-history-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .score-history-table th {
+    padding: 10px 8px; background: #f5f0e8; text-align: center;
+    font-weight: 600; color: var(--primary); white-space: nowrap;
+  }
+  .score-history-table td {
+    padding: 8px; text-align: center; border-bottom: 1px solid #eee;
+  }
+  .score-history-table tr:hover { background: #faf8f3; }
+  .del-btn {
+    padding: 4px 10px; font-size: 11px; border: 1px solid #ddd;
+    border-radius: 6px; background: #fff; cursor: pointer; color: var(--danger);
+  }
+  .del-btn:hover { background: #fce4e4; }
+
+  /* ===== TREND CHART ===== */
+  #score-trend-canvas { width: 100%; height: 300px; display: block; }
+  .trend-legend {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
+    justify-content: center;
+  }
+  .trend-legend-item {
+    display: inline-flex; align-items: center; gap: 4px; font-size: 12px;
+    cursor: pointer; user-select: none;
+  }
+  .trend-legend-line { width: 16px; height: 3px; border-radius: 2px; }
+
+  /* ===== DAILY STATS ===== */
+  .daily-stats-panel {
+    margin-top: 24px; padding-top: 24px; border-top: 2px dashed #e0d5c5;
+  }
+  .daily-stats-grid {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-bottom: 16px;
+  }
+  @media (max-width: 768px) { .daily-stats-grid { grid-template-columns: 1fr; } }
+  .streak-card {
+    display: flex; align-items: center; gap: 14px; padding: 16px;
+    background: linear-gradient(135deg, #fff9e6, #fff5d6); border-radius: 12px;
+    border: 1px solid rgba(212,160,23,0.2);
+  }
+  .streak-number {
+    font-size: 36px; font-weight: 700; color: var(--accent);
+    line-height: 1; font-family: 'Noto Serif SC', serif;
+  }
+  .weekly-bars {
+    display: flex; gap: 6px; align-items: flex-end; height: 70px;
+  }
+  .weekly-bar-col {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .weekly-bar-container {
+    width: 100%; height: 44px; display: flex; align-items: flex-end; justify-content: center;
+  }
+  .weekly-bar {
+    width: 60%; border-radius: 4px 4px 0 0; min-height: 2px; transition: height 0.3s;
+  }
+  .heatmap-row { display: flex; gap: 12px; align-items: flex-start; }
+  .heatmap-weeks { display: flex; gap: 4px; }
+  .heatmap-week { display: flex; flex-direction: column; gap: 3px; }
+  .heatmap-cell {
+    width: 26px; height: 20px; border-radius: 3px; cursor: default;
+    transition: transform 0.15s;
+  }
+  .heatmap-cell:hover { transform: scale(1.3); z-index: 1; position: relative; }
+  .heatmap-label { font-size: 9px; color: var(--text-light); text-align: center; height: 14px; line-height: 14px; }
+  .heatmap-day-labels { display: flex; flex-direction: column; gap: 3px; font-size: 9px; color: var(--text-light); padding-top: 16px; }
+  .heatmap-day-labels div { height: 20px; line-height: 20px; }
 </style>
 </head>
 <body>
@@ -1745,16 +1832,47 @@
       <h2>成绩追踪打卡</h2>
       <span class="line"></span>
     </div>
-    <p style="font-size:14px; color:var(--text-light); margin-bottom:16px;">输入每次考试的实际成绩，系统自动计算与目标的差距和完成进度。<b>数据保存在本地浏览器</b>，下次打开自动恢复。</p>
+    <p style="font-size:14px; color:var(--text-light); margin-bottom:16px;">录入每次考试成绩（期中期末/周考/月考/默写/单元测等），系统自动保存历史记录并生成成绩趋势图。<b>数据保存在本地浏览器</b>，下次打开自动恢复。</p>
 
     <div class="score-tracker">
-      <h3 style="font-family:'Noto Serif SC',serif; font-size:18px; color:var(--primary); margin-bottom:16px;">期中考试成绩录入</h3>
-      <div id="score-tracker-list"></div>
-      <div style="margin-top:16px; display:flex; gap:10px;">
-        <button class="action-btn primary" onclick="saveScores()">保存成绩</button>
-        <button class="action-btn" onclick="resetScores()">清空</button>
+      <div class="score-tabs">
+        <button class="score-tab active" onclick="switchScoreTab('input',this)">录入成绩</button>
+        <button class="score-tab" onclick="switchScoreTab('history',this)">成绩历史</button>
+        <button class="score-tab" onclick="switchScoreTab('trend',this)">成绩趋势图</button>
       </div>
-      <div id="score-saved-tip" style="display:none; margin-top:12px; padding:8px 16px; background:#e8f5e9; border-radius:8px; font-size:13px; color:var(--success);">成绩已保存！</div>
+
+      <div id="score-tab-input" class="score-tab-content active">
+        <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap; align-items:center;">
+          <label style="font-size:13px; font-weight:600; color:var(--primary);">日期</label>
+          <input type="date" id="exam-date" class="score-date-input">
+          <label style="font-size:13px; font-weight:600; color:var(--primary);">考试类型</label>
+          <select id="exam-type" class="score-type-select">
+            <option value="期中考试">期中考试</option>
+            <option value="期末考试">期末考试</option>
+            <option value="月考">月考</option>
+            <option value="周考">周考</option>
+            <option value="语文默写">语文默写</option>
+            <option value="英语默写">英语默写</option>
+            <option value="单元测试">单元测试</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div id="score-tracker-list"></div>
+        <div style="margin-top:16px; display:flex; gap:10px;">
+          <button class="action-btn primary" onclick="saveExamRecord()">保存成绩记录</button>
+          <button class="action-btn" onclick="clearScoreForm()">清空录入</button>
+        </div>
+        <div id="score-saved-tip" style="display:none; margin-top:12px; padding:8px 16px; background:#e8f5e9; border-radius:8px; font-size:13px; color:var(--success);">成绩已保存！可在「成绩历史」中查看。</div>
+      </div>
+
+      <div id="score-tab-history" class="score-tab-content">
+        <div id="score-history-container"></div>
+      </div>
+
+      <div id="score-tab-trend" class="score-tab-content">
+        <canvas id="score-trend-canvas"></canvas>
+        <div id="score-trend-legend" class="trend-legend"></div>
+      </div>
     </div>
 
     <div class="daily-checklist">
@@ -1771,6 +1889,27 @@
         <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-sleep')"></div><span class="task-text">22:15前入睡</span></div>
       </div>
       <div id="daily-complete-tip" style="display:none; margin-top:12px; padding:10px 16px; background:#e8f5e9; border-radius:8px; font-size:13px; color:var(--success); font-weight:600;">今日全部完成！太棒了！</div>
+
+      <div class="daily-stats-panel">
+        <h4 style="font-family:'Noto Serif SC',serif; font-size:16px; color:var(--primary); margin-bottom:16px;">打卡统计</h4>
+        <div class="daily-stats-grid">
+          <div class="streak-card">
+            <div class="streak-number" id="streak-number">0</div>
+            <div>
+              <div style="font-size:13px; color:var(--text); font-weight:600;">连续完成天数</div>
+              <div style="font-size:11px; color:var(--text-light);">完成率80%以上计1天</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px; color:var(--text-light); margin-bottom:8px;">近7天每日完成率</div>
+            <div class="weekly-bars" id="weekly-bars"></div>
+          </div>
+        </div>
+        <div style="margin-top:8px;">
+          <div style="font-size:13px; color:var(--text-light); margin-bottom:10px;">近4周打卡热力图（颜色越深完成率越高）</div>
+          <div class="heatmap-row" id="heatmap-container"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1953,34 +2092,46 @@ window.addEventListener('scroll', function() {
 
 // ===== 成绩追踪 =====
 var scoreSubjects = [
-  { name: '语文', full: 100, current: 81.5, target: 93 },
-  { name: '数学', full: 100, current: 83.5, target: 96 },
-  { name: '英语', full: 100, current: 84, target: 95 },
-  { name: '物理', full: 100, current: null, target: 93 },
-  { name: '地理', full: 50, current: 49, target: 50 },
-  { name: '生物', full: 50, current: 47, target: 48 },
-  { name: '政治', full: 60, current: 44, target: 54 },
-  { name: '历史', full: 60, current: 55, target: 57 }
+  { name: '语文', full: 100, current: 81.5, target: 93, color: '#e74c3c' },
+  { name: '数学', full: 100, current: 83.5, target: 96, color: '#3498db' },
+  { name: '英语', full: 100, current: 84, target: 95, color: '#2ecc71' },
+  { name: '物理', full: 100, current: null, target: 93, color: '#9b59b6' },
+  { name: '地理', full: 50, current: 49, target: 50, color: '#e67e22' },
+  { name: '生物', full: 50, current: 47, target: 48, color: '#1abc9c' },
+  { name: '政治', full: 60, current: 44, target: 54, color: '#f39c12' },
+  { name: '历史', full: 60, current: 55, target: 57, color: '#34495e' }
 ];
 
+var trendVisible = {};
+scoreSubjects.forEach(function(s) { trendVisible[s.name] = true; });
+
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+function switchScoreTab(tab, btn) {
+  document.querySelectorAll('.score-tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.score-tab-content').forEach(function(c) { c.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('score-tab-' + tab).classList.add('active');
+  if (tab === 'history') renderScoreHistory();
+  if (tab === 'trend') renderTrendChart();
+}
+
 function renderScoreTracker() {
-  var saved = JSON.parse(localStorage.getItem('scoreTracker') || '{}');
   var html = '';
   scoreSubjects.forEach(function(s, i) {
-    var val = saved[s.name] !== undefined ? saved[s.name] : '';
-    var pct = val !== '' ? Math.min(100, (parseFloat(val) / s.target) * 100) : 0;
-    var diff = val !== '' ? (parseFloat(val) - s.target).toFixed(1) : '—';
-    var diffColor = val !== '' && parseFloat(val) >= s.target ? 'var(--success)' : 'var(--danger)';
-    var barColor = pct >= 100 ? 'var(--success)' : pct >= 70 ? 'var(--accent)' : 'var(--warning)';
+    var placeholder = s.current !== null ? s.current : '—';
     html += '<div class="score-input-row">' +
       '<span class="score-input-label">' + s.name + '</span>' +
       '<span class="score-input-target">目标' + s.target + '</span>' +
-      '<input type="number" class="score-input-field" id="score-' + i + '" placeholder="' + (s.current || '—') + '" value="' + val + '" onchange="updateScoreRow(' + i + ')">' +
-      '<span class="score-input-diff" id="diff-' + i + '" style="color:' + diffColor + '">' + (diff > 0 ? '+' : '') + diff + '</span>' +
-      '<div class="score-input-bar"><div class="score-input-fill" id="fill-' + i + '" style="width:' + pct + '%; background:' + barColor + '"></div></div>' +
+      '<input type="number" class="score-input-field" id="score-' + i + '" placeholder="' + placeholder + '" onchange="updateScoreRow(' + i + ')">' +
+      '<span class="score-input-diff" id="diff-' + i + '" style="color:var(--text-light)">—</span>' +
+      '<div class="score-input-bar"><div class="score-input-fill" id="fill-' + i + '" style="width:0%; background:var(--warning)"></div></div>' +
       '</div>';
   });
   document.getElementById('score-tracker-list').innerHTML = html;
+  var today = new Date();
+  var dateInput = document.getElementById('exam-date');
+  if (dateInput) dateInput.value = today.getFullYear() + '-' + pad2(today.getMonth()+1) + '-' + pad2(today.getDate());
 }
 
 function updateScoreRow(i) {
@@ -2003,28 +2154,188 @@ function updateScoreRow(i) {
   fillEl.style.background = pct >= 100 ? 'var(--success)' : pct >= 70 ? 'var(--accent)' : 'var(--warning)';
 }
 
-function saveScores() {
-  var data = {};
-  scoreSubjects.forEach(function(s, i) {
-    var input = document.getElementById('score-' + i);
-    if (input.value !== '') data[s.name] = parseFloat(input.value);
-  });
-  localStorage.setItem('scoreTracker', JSON.stringify(data));
-  var tip = document.getElementById('score-saved-tip');
-  tip.style.display = 'block';
-  setTimeout(function() { tip.style.display = 'none'; }, 2000);
+function getExamRecords() {
+  return JSON.parse(localStorage.getItem('examRecords') || '[]');
 }
 
-function resetScores() {
-  if (confirm('确定清空所有成绩？')) {
-    localStorage.removeItem('scoreTracker');
-    renderScoreTracker();
+function saveExamRecord() {
+  var date = document.getElementById('exam-date').value;
+  var type = document.getElementById('exam-type').value;
+  if (!date) { alert('请选择日期'); return; }
+  var scores = {};
+  var hasScore = false;
+  scoreSubjects.forEach(function(s, i) {
+    var input = document.getElementById('score-' + i);
+    if (input && input.value !== '') {
+      scores[s.name] = parseFloat(input.value);
+      hasScore = true;
+    }
+  });
+  if (!hasScore) { alert('请至少录入一科成绩'); return; }
+  var records = getExamRecords();
+  records.push({ date: date, type: type, scores: scores });
+  records.sort(function(a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+  localStorage.setItem('examRecords', JSON.stringify(records));
+  var tip = document.getElementById('score-saved-tip');
+  tip.style.display = 'block';
+  setTimeout(function() { tip.style.display = 'none'; }, 2500);
+  clearScoreForm();
+}
+
+function clearScoreForm() {
+  scoreSubjects.forEach(function(s, i) {
+    var input = document.getElementById('score-' + i);
+    if (input) { input.value = ''; updateScoreRow(i); }
+  });
+}
+
+function renderScoreHistory() {
+  var records = getExamRecords();
+  var container = document.getElementById('score-history-container');
+  if (records.length === 0) {
+    container.innerHTML = '<p style="text-align:center; color:var(--text-light); padding:40px;">暂无成绩记录，先在「录入成绩」中保存吧</p>';
+    return;
   }
+  var subjects = scoreSubjects.map(function(s) { return s.name; });
+  var html = '<div class="score-history-wrap"><table class="score-history-table"><thead><tr>';
+  html += '<th>日期</th><th>类型</th>';
+  subjects.forEach(function(s) { html += '<th>' + s + '</th>'; });
+  html += '<th>操作</th></tr></thead><tbody>';
+  for (var i = records.length - 1; i >= 0; i--) {
+    var r = records[i];
+    html += '<tr><td>' + r.date + '</td><td>' + r.type + '</td>';
+    subjects.forEach(function(s) {
+      var val = r.scores[s];
+      var subj = scoreSubjects.find(function(sb) { return sb.name === s; });
+      var color = 'var(--text-light)';
+      if (val !== undefined) {
+        color = val >= subj.target ? 'var(--success)' : val >= subj.target * 0.85 ? 'var(--warning)' : 'var(--danger)';
+      }
+      html += '<td style="color:' + color + '; font-weight:600;">' + (val !== undefined ? val : '—') + '</td>';
+    });
+    html += '<td><button class="del-btn" onclick="deleteExamRecord(' + i + ')">删除</button></td></tr>';
+  }
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+function deleteExamRecord(idx) {
+  if (!confirm('确定删除这条成绩记录？')) return;
+  var records = getExamRecords();
+  records.splice(idx, 1);
+  localStorage.setItem('examRecords', JSON.stringify(records));
+  renderScoreHistory();
+}
+
+function renderTrendChart() {
+  var records = getExamRecords();
+  var canvas = document.getElementById('score-trend-canvas');
+  var legend = document.getElementById('score-trend-legend');
+  if (!canvas || !legend) return;
+  var ctx = canvas.getContext('2d');
+  var rect = canvas.getBoundingClientRect();
+  if (records.length === 0) {
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    ctx.fillStyle = '#aaa';
+    ctx.font = '14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('暂无成绩记录，无法绘制趋势图', rect.width / 2, rect.height / 2);
+    legend.innerHTML = '';
+    return;
+  }
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+  var W = rect.width, H = rect.height;
+  ctx.clearRect(0, 0, W, H);
+  var padL = 45, padR = 15, padT = 20, padB = 40;
+  var chartW = W - padL - padR;
+  var chartH = H - padT - padB;
+  var dates = records.map(function(r) { return r.date; });
+  var maxVal = 100;
+  scoreSubjects.forEach(function(s) {
+    records.forEach(function(r) {
+      if (r.scores[s.name] !== undefined && r.scores[s.name] > maxVal) maxVal = r.scores[s.name];
+    });
+  });
+  maxVal = Math.ceil(maxVal / 10) * 10;
+  ctx.strokeStyle = '#eee';
+  ctx.fillStyle = '#999';
+  ctx.font = '10px sans-serif';
+  ctx.lineWidth = 1;
+  var gridSteps = 5;
+  for (var g = 0; g <= gridSteps; g++) {
+    var y = padT + chartH - (chartH * g / gridSteps);
+    ctx.beginPath();
+    ctx.moveTo(padL, y);
+    ctx.lineTo(W - padR, y);
+    ctx.strokeStyle = '#eee';
+    ctx.stroke();
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxVal * g / gridSteps), padL - 6, y + 3);
+  }
+  var n = dates.length;
+  ctx.textAlign = 'center';
+  for (var d = 0; d < n; d++) {
+    var xPos = padL + (n === 1 ? chartW / 2 : chartW * d / (n - 1));
+    ctx.save();
+    ctx.translate(xPos, padT + chartH + 8);
+    ctx.rotate(-0.4);
+    ctx.fillText(dates[d].substring(5), 0, 10);
+    ctx.restore();
+  }
+  var legendHTML = '';
+  scoreSubjects.forEach(function(s) {
+    var points = [];
+    records.forEach(function(r, ri) {
+      if (r.scores[s.name] !== undefined) {
+        var x = padL + (n === 1 ? chartW / 2 : chartW * ri / (n - 1));
+        var y = padT + chartH - (r.scores[s.name] / maxVal) * chartH;
+        points.push({ x: x, y: y });
+      }
+    });
+    if (points.length > 0) {
+      if (trendVisible[s.name]) {
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        points.forEach(function(p, pi) {
+          if (pi === 0) ctx.moveTo(p.x, p.y);
+          else ctx.lineTo(p.x, p.y);
+        });
+        ctx.stroke();
+        points.forEach(function(p) {
+          ctx.fillStyle = s.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+      legendHTML += '<span class="trend-legend-item" onclick="toggleTrendSubject(\'' + s.name + '\')" style="opacity:' + (trendVisible[s.name] ? '1' : '0.35') + ';">' +
+        '<span class="trend-legend-line" style="background:' + s.color + ';"></span>' + s.name + '</span> ';
+    }
+  });
+  legend.innerHTML = legendHTML || '<span style="color:var(--text-light);">暂无可绘制的成绩数据</span>';
+}
+
+function toggleTrendSubject(name) {
+  trendVisible[name] = !trendVisible[name];
+  renderTrendChart();
 }
 
 // ===== 每日打卡 =====
+var dailyTaskKeys = ['d-english-am','d-english','d-math','d-physics','d-chinese','d-minor','d-review','d-sleep'];
+
 function getTodayKey() {
   var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+
+function dateKey(d) {
   return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
 }
 
@@ -2047,20 +2358,113 @@ function loadDailyTasks() {
   var todayKey = 'daily_' + getTodayKey();
   var saved = JSON.parse(localStorage.getItem(todayKey) || '{}');
   var items = document.querySelectorAll('#daily-checklist-items .task-checkbox');
-  items.forEach(function(el, i) {
+  items.forEach(function(el) {
     var key = el.getAttribute('onclick').match(/'([^']+)'/)[1];
     if (saved[key]) el.classList.add('checked');
   });
   updateDailyProgress();
 }
 
+function getDailyRate(dKey) {
+  var saved = JSON.parse(localStorage.getItem('daily_' + dKey) || '{}');
+  var total = dailyTaskKeys.length;
+  var done = 0;
+  dailyTaskKeys.forEach(function(k) { if (saved[k]) done++; });
+  return { rate: total > 0 ? done / total : 0, done: done, total: total };
+}
+
 function updateDailyProgress() {
   var items = document.querySelectorAll('#daily-checklist-items .task-checkbox');
   var done = document.querySelectorAll('#daily-checklist-items .task-checkbox.checked');
-  var pct = Math.round((done.length / items.length) * 100);
+  var pct = items.length > 0 ? Math.round((done.length / items.length) * 100) : 0;
   var tip = document.getElementById('daily-complete-tip');
-  tip.style.display = done.length === items.length ? 'block' : 'none';
+  if (tip) tip.style.display = done.length === items.length ? 'block' : 'none';
   updateProgress('每日打卡', pct);
+  renderDailyStats();
+}
+
+function renderDailyStats() {
+  renderStreak();
+  renderWeeklyBars();
+  renderHeatmap();
+}
+
+function renderStreak() {
+  var streak = 0;
+  var today = new Date();
+  for (var i = 0; i < 365; i++) {
+    var d = new Date(today);
+    d.setDate(d.getDate() - i);
+    var rate = getDailyRate(dateKey(d)).rate;
+    if (rate >= 0.8) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+  var el = document.getElementById('streak-number');
+  if (el) el.textContent = streak;
+}
+
+function renderWeeklyBars() {
+  var container = document.getElementById('weekly-bars');
+  if (!container) return;
+  var today = new Date();
+  var days = ['日','一','二','三','四','五','六'];
+  var html = '';
+  for (var i = 6; i >= 0; i--) {
+    var d = new Date(today);
+    d.setDate(d.getDate() - i);
+    var rate = getDailyRate(dateKey(d)).rate;
+    var pct = Math.round(rate * 100);
+    var height = Math.max(2, pct * 0.4);
+    var color = pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--accent)' : pct > 0 ? 'var(--warning)' : '#e0d5c5';
+    html += '<div class="weekly-bar-col">' +
+      '<div class="weekly-bar-container"><div class="weekly-bar" style="height:' + height + 'px; background:' + color + ';" title="' + pct + '%"></div></div>' +
+      '<div class="heatmap-label">' + days[d.getDay()] + '</div>' +
+      '</div>';
+  }
+  container.innerHTML = html;
+}
+
+function renderHeatmap() {
+  var container = document.getElementById('heatmap-container');
+  if (!container) return;
+  var today = new Date();
+  var weeks = 4;
+  var dayLabels = ['一','二','三','四','五','六','日'];
+  var todayMonToSun = today.getDay() === 0 ? 6 : today.getDay() - 1;
+
+  var labelHTML = '<div class="heatmap-day-labels">';
+  for (var dl = 0; dl < 7; dl++) { labelHTML += '<div>' + dayLabels[dl] + '</div>'; }
+  labelHTML += '</div>';
+
+  var weeksHTML = '<div class="heatmap-weeks">';
+  var weekLabelsHTML = '<div style="display:flex; gap:4px;">';
+  for (var w = weeks - 1; w >= 0; w--) {
+    weeksHTML += '<div class="heatmap-week">';
+    for (var day = 0; day < 7; day++) {
+      var offset = w * 7 + (day - todayMonToSun);
+      var d = new Date(today);
+      d.setDate(d.getDate() + offset);
+      var rate = getDailyRate(dateKey(d)).rate;
+      var pct = Math.round(rate * 100);
+      var bg;
+      if (pct === 0) bg = '#f0ebe5';
+      else if (pct < 50) bg = '#fde8c8';
+      else if (pct < 80) bg = '#fac98a';
+      else if (pct < 100) bg = '#f5b041';
+      else bg = '#d4a017';
+      var dateStr = (d.getMonth()+1) + '/' + d.getDate();
+      weeksHTML += '<div class="heatmap-cell" style="background:' + bg + ';" title="' + dateStr + ': ' + pct + '%"></div>';
+    }
+    weeksHTML += '</div>';
+    weekLabelsHTML += '<div class="heatmap-label" style="width:26px;">' + (w === 0 ? '本周' : w + '周前') + '</div>';
+  }
+  weeksHTML += '</div>';
+  weekLabelsHTML += '</div>';
+
+  container.innerHTML = '<div style="display:flex; gap:8px;">' + labelHTML + '<div>' + weeksHTML + weekLabelsHTML + '</div></div>';
 }
 
 // ===== 浮动进度面板 =====
@@ -2081,7 +2485,6 @@ function renderProgressFloat() {
   var overall = count > 0 ? Math.round(total / count) : 0;
   document.getElementById('overall-fill').style.width = overall + '%';
   document.getElementById('overall-label').textContent = '总进度 ' + overall + '%';
-
   var html = '';
   for (var k in progressData) {
     html += '<div class="progress-section-row">' +
@@ -2097,15 +2500,6 @@ renderScoreTracker();
 renderDailyDate();
 loadDailyTasks();
 renderProgressFloat();
-
-// 检查每日打卡是否过期（新的一天清空旧数据）
-(function checkDailyReset() {
-  var todayKey = 'daily_' + getTodayKey();
-  if (!localStorage.getItem(todayKey)) {
-    var keys = Object.keys(localStorage).filter(function(k) { return k.indexOf('daily_') === 0; });
-    keys.forEach(function(k) { if (k !== todayKey) localStorage.removeItem(k); });
-  }
-})();
 </script>
 
 </body>
