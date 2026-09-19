@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>初二学年学习计划 — 目标哈工大</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  :root {
+    --primary: #1a3a5c;
+    --primary-light: #2d5a87;
+    --accent: #d4a017;
+    --accent-light: #f0c040;
+    --danger: #c0392b;
+    --success: #27ae60;
+    --warning: #e67e22;
+    --bg: #f5f0e8;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --border: #e0d5c5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #1a3a5c 100%);
+    color: #fff;
+    padding: 60px 0 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(212, 160, 23, 0.08);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(212,160,23,0.2);
+    border: 1px solid rgba(212,160,23,0.4);
+    color: var(--accent-light);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+  .hero .subtitle { font-size: 16px; opacity: 0.85; margin-bottom: 24px; max-width: 600px; }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+  .hero-meta-item .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ===== SECTION ===== */
+  section { padding: 50px 0; }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  .section-title .num {
+    width: 40px; height: 40px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .section-title .line {
+    flex: 1; height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  /* ===== SCORE CARDS ===== */
+  .score-overview {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+  }
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: 16px;
+  }
+  .score-card {
+    text-align: center;
+    padding: 20px 12px;
+    border-radius: 12px;
+    transition: transform 0.2s;
+  }
+  .score-card:hover { transform: translateY(-4px); }
+  .score-card .subject-name {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+  .score-card .score-value {
+    font-size: 30px;
+    font-weight: 700;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .score-card .score-full {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+  .score-card .score-bar {
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .score-card .score-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+  .score-card .score-label {
+    font-size: 11px;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .level-good { background: #e8f5e9; }
+  .level-good .score-value { color: var(--success); }
+  .level-good .score-fill { background: var(--success); }
+  .level-good .score-label { color: var(--success); }
+
+  .level-mid { background: #fff8e1; }
+  .level-mid .score-value { color: var(--warning); }
+  .level-mid .score-fill { background: var(--warning); }
+  .level-mid .score-label { color: var(--warning); }
+
+  .level-bad { background: #ffebee; }
+  .level-bad .score-value { color: var(--danger); }
+  .level-bad .score-fill { background: var(--danger); }
+  .level-bad .score-label { color: var(--danger); }
+
+  /* ===== ANALYSIS ===== */
+  .analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .analysis-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 24px;
+    border-left: 4px solid var(--primary);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .analysis-card.warn { border-left-color: var(--danger); }
+  .analysis-card.success { border-left-color: var(--success); }
+  .analysis-card.accent { border-left-color: var(--accent); }
+  .analysis-card h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: var(--primary);
+  }
+  .analysis-card.warn h4 { color: var(--danger); }
+  .analysis-card.success h4 { color: var(--success); }
+  .analysis-card p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  /* ===== GOAL TABLE ===== */
+  .goal-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .goal-table th {
+    background: var(--primary);
+    color: #fff;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .goal-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .goal-table tr:last-child td { border-bottom: none; }
+  .goal-table tr:hover { background: #f9f6f0; }
+  .goal-table .gap {
+    font-weight: 700;
+    color: var(--danger);
+  }
+  .goal-table .target { color: var(--success); font-weight: 600; }
+  .goal-table .maintain { color: var(--primary-light); font-weight: 600; }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; padding-left: 0; }
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .timeline-month {
+    flex-shrink: 0;
+    width: 90px;
+    text-align: right;
+  }
+  .timeline-month .month-label {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .timeline-month .month-sub {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  .timeline-content {
+    flex: 1;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    position: relative;
+  }
+  .timeline-content::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 24px;
+    width: 0; height: 0;
+    border: 6px solid transparent;
+    border-right-color: var(--card-bg);
+  }
+  .timeline-content h4 {
+    font-size: 16px;
+    color: var(--primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge { display: inline-block; font-size: 11px; padding: 2px 10px; border-radius: 10px; font-weight: 500; }
+  .badge-key { background: #ffebee; color: var(--danger); }
+  .badge-normal { background: #e3f2fd; color: var(--primary-light); }
+  .badge-exam { background: #fff3e0; color: var(--warning); }
+
+  .timeline-content ul { list-style: none; padding: 0; }
+  .timeline-content ul li {
+    font-size: 14px;
+    padding: 3px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .timeline-content ul li::before {
+    content: '\25B8';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  /* ===== SUBJECT STRATEGY ===== */
+  .subject-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .tab-btn {
+    padding: 10px 18px;
+    border: 2px solid var(--border);
+    background: var(--card-bg);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { border-color: var(--primary-light); }
+  .tab-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+  }
+  .subject-panel {
+    display: none;
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .subject-panel.active { display: block; }
+  .subject-panel h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    color: var(--primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .subject-panel h3 .tag {
+    font-size: 12px;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-weight: 400;
+  }
+  .strategy-block { margin-bottom: 20px; }
+  .strategy-block h4 {
+    font-size: 15px;
+    color: var(--primary-light);
+    margin-bottom: 8px;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 4px;
+  }
+  .strategy-block p, .strategy-block li {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .strategy-block ul { list-style: none; padding: 0; }
+  .strategy-block li { padding: 4px 0 4px 18px; position: relative; }
+  .strategy-block li::before {
+    content: '\2713';
+    position: absolute; left: 0;
+    color: var(--success);
+    font-size: 13px;
+  }
+
+  /* ===== SCHEDULE ===== */
+  .schedule-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .schedule-wrapper { grid-template-columns: 1fr; }
+  }
+  .schedule-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .schedule-card .card-header {
+    background: var(--primary);
+    color: #fff;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .schedule-card .card-body { padding: 20px 24px; }
+  .time-row {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0ebe5;
+    font-size: 14px;
+  }
+  .time-row:last-child { border-bottom: none; }
+  .time-row .time {
+    flex-shrink: 0;
+    width: 110px;
+    color: var(--primary-light);
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .time-row .activity { flex: 1; }
+
+  /* ===== PATH ===== */
+  .path-container {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .path-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .path-step {
+    text-align: center;
+    padding: 24px 16px;
+    border-radius: 12px;
+    background: #f9f6f0;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .path-step:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .path-step .step-num {
+    width: 44px; height: 44px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .path-step:nth-child(1) .step-num { background: #3498db; }
+  .path-step:nth-child(2) .step-num { background: #9b59b6; }
+  .path-step:nth-child(3) .step-num { background: var(--accent); }
+  .path-step:nth-child(4) .step-num { background: var(--success); }
+  .path-step:nth-child(5) .step-num { background: var(--danger); }
+  .path-step h4 { font-size: 15px; margin-bottom: 8px; color: var(--primary); }
+  .path-step p { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+  .path-step .step-arrow {
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--border);
+  }
+
+  /* ===== TIPS ===== */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  .tip-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    border-top: 3px solid var(--accent);
+  }
+  .tip-card h4 { font-size: 15px; margin-bottom: 8px; color: var(--primary); }
+  .tip-card p { font-size: 13px; line-height: 1.7; color: var(--text); }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 13px;
+    opacity: 0.9;
+  }
+  .footer strong { color: var(--accent-light); }
+
+  /* ===== NOTE BOX ===== */
+  .note-box {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .note-box strong { color: var(--warning); }
+
+  /* ===== INTERACTIVE: NAV BAR ===== */
+  .nav-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--primary);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    padding: 0;
+  }
+  .nav-container {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 4px;
+    padding: 8px 20px;
+  }
+  .nav-btn {
+    padding: 8px 14px;
+    border: none; background: transparent;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px; font-family: inherit;
+    cursor: pointer; border-radius: 8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-btn.active { background: var(--accent); color: var(--primary); font-weight: 600; }
+
+  /* ===== INTERACTIVE: TASK CHECKBOX ===== */
+  .task-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 6px 0;
+  }
+  .task-checkbox {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .task-checkbox.checked {
+    background: var(--success);
+    border-color: var(--success);
+  }
+  .task-checkbox.checked::after {
+    content: '\2714'; color: #fff; font-size: 13px;
+  }
+  .task-checkbox.checked + .task-text {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+  .task-text { flex: 1; font-size: 14px; line-height: 1.7; }
+
+  /* ===== INTERACTIVE: PROGRESS TRACKER ===== */
+  .progress-float {
+    position: fixed; right: 20px; bottom: 20px;
+    z-index: 200;
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    padding: 16px 20px;
+    width: 260px;
+    transition: transform 0.3s;
+  }
+  .progress-float.collapsed { transform: translateY(calc(100% - 44px)); }
+  .progress-float-header {
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; margin-bottom: 12px;
+  }
+  .progress-float-title { font-size: 14px; font-weight: 700; color: var(--primary); }
+  .progress-float-toggle {
+    width: 24px; height: 24px; border: none; background: #f0f0f0;
+    border-radius: 50%; cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .progress-bar-overall {
+    height: 8px; background: #eee; border-radius: 4px; overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .progress-bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--success), var(--accent));
+    border-radius: 4px; transition: width 0.5s;
+  }
+  .progress-label { font-size: 12px; color: var(--text-light); margin-bottom: 10px; }
+  .progress-section-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; padding: 3px 0;
+  }
+  .progress-section-name { color: var(--text); }
+  .progress-section-val { color: var(--text-light); font-weight: 600; }
+
+  /* ===== INTERACTIVE: SCORE TRACKER ===== */
+  .score-tracker {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    margin-top: 24px;
+  }
+  .score-input-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0ebe5;
+  }
+  .score-input-row:last-child { border-bottom: none; }
+  .score-input-label { width: 80px; font-weight: 600; font-size: 14px; color: var(--primary); }
+  .score-input-target { width: 70px; font-size: 13px; color: var(--success); font-weight: 600; }
+  .score-input-field {
+    width: 70px; padding: 6px 10px;
+    border: 2px solid var(--border); border-radius: 8px;
+    font-size: 14px; font-family: inherit;
+    text-align: center;
+  }
+  .score-input-field:focus { border-color: var(--primary-light); outline: none; }
+  .score-input-diff { font-size: 13px; font-weight: 600; min-width: 50px; }
+  .score-input-bar {
+    flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden;
+  }
+  .score-input-fill { height: 100%; border-radius: 4px; transition: width 0.4s; }
+
+  /* ===== INTERACTIVE: DAILY CHECKLIST ===== */
+  .daily-checklist {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    margin-top: 24px;
+  }
+  .daily-date {
+    font-size: 14px; color: var(--text-light); margin-bottom: 16px;
+  }
+  .daily-checklist-items {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  }
+  @media (max-width: 768px) { .daily-checklist-items { grid-template-columns: 1fr; } }
+
+  /* ===== INTERACTIVE: COLLAPSIBLE ===== */
+  .collapsible-header {
+    cursor: pointer; user-select: none;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .collapsible-toggle {
+    font-size: 18px; color: var(--text-light);
+    transition: transform 0.3s;
+  }
+  .collapsible-header.collapsed .collapsible-toggle { transform: rotate(-90deg); }
+  .collapsible-content { overflow: hidden; transition: max-height 0.4s ease; }
+
+  /* ===== INTERACTIVE: MISC ===== */
+  .action-bar {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .action-btn {
+    padding: 10px 20px; border: 2px solid var(--border);
+    background: var(--card-bg); border-radius: 10px;
+    cursor: pointer; font-size: 13px; font-family: inherit;
+    color: var(--text); transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .action-btn:hover { border-color: var(--primary-light); background: #f9f6f0; }
+  .action-btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .action-btn.primary:hover { background: var(--primary-light); }
+
+  .section-progress {
+    margin-left: auto;
+    font-size: 13px; color: var(--text-light);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-progress-bar {
+    width: 80px; height: 6px; background: #eee; border-radius: 3px; overflow: hidden;
+  }
+  .section-progress-fill {
+    height: 100%; background: var(--success); border-radius: 3px; transition: width 0.4s;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="container hero-content">
+    <span class="hero-tag">2026-2027 学年 · 初二全年规划</span>
+    <h1>初二学年学习计划</h1>
+    <p class="subtitle">主科突破 + 数理特长 + 会考保A — 一年进阶，学科特长生冲名校，目标哈工大</p>
+    <div class="hero-meta">
+      <span class="hero-meta-item"><span class="dot"></span>学生：女生 · 苏北户籍 · 南京就读初二</span>
+      <span class="hero-meta-item"><span class="dot"></span>起始时间：2026年9月1日</span>
+      <span class="hero-meta-item"><span class="dot"></span>目标大学：哈尔滨工业大学</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NAV BAR ===== -->
+<div class="nav-bar">
+  <div class="nav-container">
+    <button class="nav-btn active" onclick="scrollToSection('sec-analysis')">1. 现状分析</button>
+    <button class="nav-btn" onclick="scrollToSection('sec-goal')">2. 目标设定</button>
+    <button class="nav-btn" onclick="scrollToSection('sec-timeline')">3. 全年时间轴</button>
+    <button class="nav-btn" onclick="scrollToSection('sec-strategy')">4. 各科策略</button>
+    <button class="nav-btn" onclick="scrollToSection('sec-special')">4.5 特长生备考</button>
+    <button class="nav-btn" onclick="scrollToSection('sec-schedule')">5. 每日时间表</button>
+    <button class="nav-btn" onclick="scrollToSection('sec-score')">5.5 成绩追踪</button>
+    <button class="nav-btn" onclick="scrollToSection('sec-path')">6. 通向哈工大</button>
+    <button class="nav-btn" onclick="scrollToSection('sec-tips')">7. 执行保障</button>
+  </div>
+</div>
+
+<!-- ===== 1. 现状分析 ===== -->
+<section id="sec-analysis">
+  <div class="container">
+    <div class="section-title">
+      <span class="num">1</span>
+      <h2>现状分析</h2>
+      <span class="line"></span>
+    </div>
+
+    <div class="score-overview">
+      <h3 style="font-family:'Noto Serif SC',serif; font-size:20px; color:var(--primary); margin-bottom:6px;">初一(下)期末成绩单</h3>
+      <p style="font-size:13px; color:var(--text-light); margin-bottom:20px;">语数英满分100 · 地理生物满分50 · 政治历史满分60</p>
+      <div class="score-grid">
+        <div class="score-card level-mid">
+          <div class="subject-name">语文</div>
+          <div class="score-value">81.5<span style="font-size:16px;color:var(--text-light);">/100</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:81.5%"></div></div>
+          <div class="score-label">得分率 81.5%</div>
+        </div>
+        <div class="score-card level-mid">
+          <div class="subject-name">数学</div>
+          <div class="score-value">83.5<span style="font-size:16px;color:var(--text-light);">/100</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:83.5%"></div></div>
+          <div class="score-label">得分率 83.5%</div>
+        </div>
+        <div class="score-card level-mid">
+          <div class="subject-name">英语</div>
+          <div class="score-value">84<span style="font-size:16px;color:var(--text-light);">/100</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:84%"></div></div>
+          <div class="score-label">得分率 84%</div>
+        </div>
+        <div class="score-card level-good">
+          <div class="subject-name">地理</div>
+          <div class="score-value">49<span style="font-size:16px;color:var(--text-light);">/50</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:98%"></div></div>
+          <div class="score-label">优秀 98%</div>
+        </div>
+        <div class="score-card level-good">
+          <div class="subject-name">生物</div>
+          <div class="score-value">47<span style="font-size:16px;color:var(--text-light);">/50</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:94%"></div></div>
+          <div class="score-label">优秀 94%</div>
+        </div>
+        <div class="score-card level-good">
+          <div class="subject-name">历史</div>
+          <div class="score-value">55<span style="font-size:16px;color:var(--text-light);">/60</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:91.7%"></div></div>
+          <div class="score-label">良好 91.7%</div>
+        </div>
+        <div class="score-card level-mid">
+          <div class="subject-name">政治</div>
+          <div class="score-value">44<span style="font-size:16px;color:var(--text-light);">/60</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:73.3%"></div></div>
+          <div class="score-label">中等 73.3%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="analysis-card warn">
+        <h4>主科是提分核心战场 · 特长生公共卷主力</h4>
+        <p>语数英得分率均在81-84%，按百分制换算相当于B+水平。距离"优秀生"（95+）仍有<b>10-15分差距</b>。初二主科难度陡升（数学函数+几何证明、英语语法深化），若不主动拔高容易被动下滑。<b>主科是中考权重最大的科目，也是哈工大强基考察核心，必须重点突破。</b>学科特长生加试公共卷中数学120分+物理110分占公共卷总分55%，主科突破直接服务于此路径。</p>
+      </div>
+      <div class="analysis-card success">
+        <h4>小科基础扎实，会考无忧</h4>
+        <p>地理98%、生物94%、历史92% — 三科均为优秀水平！地理生物6月会考<b>拿到A等问题不大</b>，只需保持节奏即可。历史也处于良好水平。这说明该生记忆力和学习习惯不差，<b>小科的成功经验可以迁移到主科</b>——只要投入同样的专注度，主科也能突破。</p>
+      </div>
+      <div class="analysis-card">
+        <h4>政治是唯一短板小科</h4>
+        <p>政治44/60（73%）是小科中唯一的薄弱项。但按60分制计算，只需提升约10分即可达到88+水平。政治是记忆+答题技巧型科目，<b>2-3个月集中投入即可见效</b>，优先级低于主科但不可忽视。</p>
+      </div>
+      <div class="analysis-card accent">
+        <h4>物理新课 — 哈工大第一核心 · 特长生重点</h4>
+        <p>物理是初二全新学科，也是哈工大强基计划的核心考察科目。初二物理力学部分是整个中学物理的根基，<b>第一学期必须打好基础</b>，争取期末93+。物理同时是学科特长生加试公共卷核心科目（110/400=27.5%），该生小科学习能力强，物理有望快速上手并建立优势，为高中选科（物理+化学）奠定基础。</p>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>户籍提醒：</strong>苏北户籍在南京就读，需提前确认中考报名资格。南京政策要求：非南京户籍学生在南京参加中考，需满足"三年初中学籍+父母一方持有效居住证"等条件（以当年政策为准）。建议家长尽早已咨询学校教务处或教育局，确认中考报名路径，避免初三临时被动。
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2. 目标设定 ===== -->
+<section id="sec-goal" style="background:#ede4d3;">
+  <div class="container">
+    <div class="section-title">
+      <span class="num">2</span>
+      <h2>目标设定</h2>
+      <span class="line"></span>
+    </div>
+
+    <h3 style="font-family:'Noto Serif SC',serif; font-size:20px; color:var(--primary); margin-bottom:6px;">初一现状 → 初二(末)目标</h3>
+    <p style="font-size:13px; color:var(--text-light); margin-bottom:16px;">数学/物理目标上调 — 初三4-5月参加南京学科特长生加试（公共卷：语90+数120+英80+物110，满分400 + 特长卷20，折算100分），目标南师附中/金陵中学数学或物理特长生。高中选科<b>物理+化学</b>，对标哈工大2025年本部物理类录取最低663分/尖班668+</p>
+    <table class="goal-table">
+      <thead>
+        <tr>
+          <th>科目</th>
+          <th>满分</th>
+          <th>当前成绩</th>
+          <th>得分率</th>
+          <th>初二期末目标</th>
+          <th>提分幅度</th>
+          <th>优先级</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>语文</b></td>
+          <td>100</td>
+          <td>81.5</td>
+          <td>81.5%</td>
+          <td class="target">93+</td>
+          <td class="gap">+11.5</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><b>数学</b> <span style="font-size:10px;color:var(--accent);">特长生</span></td>
+          <td>100</td>
+          <td>83.5</td>
+          <td>83.5%</td>
+          <td class="target">96+</td>
+          <td class="gap">+12.5</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><b>英语</b></td>
+          <td>100</td>
+          <td>84</td>
+          <td>84%</td>
+          <td class="target">95+</td>
+          <td class="gap">+11</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><b>物理</b>（新课） <span style="font-size:10px;color:var(--accent);">特长生</span></td>
+          <td>100</td>
+          <td>—</td>
+          <td>—</td>
+          <td class="target">93+</td>
+          <td class="gap">新学科</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><b>地理</b>（会考）</td>
+          <td>50</td>
+          <td>49</td>
+          <td>98%</td>
+          <td class="maintain">A（50/50）</td>
+          <td style="color:var(--primary-light);font-weight:600;">保持</td>
+          <td>★★☆☆☆</td>
+        </tr>
+        <tr>
+          <td><b>生物</b>（会考）</td>
+          <td>50</td>
+          <td>47</td>
+          <td>94%</td>
+          <td class="maintain">A（48+）</td>
+          <td style="color:var(--primary-light);font-weight:600;">+1</td>
+          <td>★★☆☆☆</td>
+        </tr>
+        <tr>
+          <td><b>政治</b></td>
+          <td>60</td>
+          <td>44</td>
+          <td>73.3%</td>
+          <td class="target">54+</td>
+          <td class="gap">+10</td>
+          <td>★★★☆☆</td>
+        </tr>
+        <tr>
+          <td><b>历史</b></td>
+          <td>60</td>
+          <td>55</td>
+          <td>91.7%</td>
+          <td class="maintain">57+</td>
+          <td style="color:var(--primary-light);font-weight:600;">+2</td>
+          <td>★★☆☆☆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px;">
+      <h3 style="font-family:'Noto Serif SC',serif; font-size:20px; color:var(--primary); margin-bottom:16px;">阶段性里程碑</h3>
+      <div class="path-steps">
+        <div class="path-step">
+          <div class="step-num">①</div>
+          <h4>2026.11 期中</h4>
+          <p>主科87+，数学物理重点突破90+，政治50+，小科维持优秀</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step">
+          <div class="step-num">②</div>
+          <h4>2027.01 期末</h4>
+          <p>主科90+，数学93+，物理90+，全科稳定优秀区间</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step">
+          <div class="step-num">③</div>
+          <h4>2027.06 会考</h4>
+          <p>地理生物会考双A，期末数学96+，物理93+，年级前列</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step">
+          <div class="step-num">④</div>
+          <h4>2027 暑假</h4>
+          <p>初三化学+电学预习，<b>学科特长生备考启动</b>：综合卷(语英数物)+加试(数/物)</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step">
+          <div class="step-num">⑤</div>
+          <h4>2028.05 特长生考试</h4>
+          <p>参加南师附中/金陵中学数学或物理特长生加试，零志愿提前录取</p>
+          <span class="step-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. 全年时间轴 ===== -->
+<section id="sec-timeline">
+  <div class="container">
+    <div class="section-title">
+      <span class="num">3</span>
+      <h2>全年时间轴</h2>
+      <span class="line"></span>
+    </div>
+
+    <div class="timeline">
+      <!-- 9月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">9月</div>
+          <div class="month-sub">开学月</div>
+        </div>
+        <div class="timeline-content">
+          <h4>新学期启航 · 主科攻坚启动 · 物理新起跑 <span class="badge badge-key">关键月</span></h4>
+          <ul>
+            <li>制定每日作息表，严格执行"22:00前入睡"纪律</li>
+            <li><b>主科是本学年核心战场</b>：数学梳理初一薄弱点（有理数/方程），英语启动每日背词30个+阅读训练，语文开始阅读理解专项</li>
+            <li>物理：紧跟课堂，每节课后15分钟回顾+5道练习题，绝不在物理上欠债</li>
+            <li>地理生物：维持优势，每周各做1套模拟题保持手感即可，不需大量投入</li>
+            <li>政治：开始系统通读教材，每周整理1课知识框架图</li>
+            <li>建立全科错题本制度（格式：原题→错因→正确解法→知识点→日期）</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 10月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">10月</div>
+          <div class="month-sub">国庆+月考</div>
+        </div>
+        <div class="timeline-content">
+          <h4>国庆弯道超车 · 月考检验 <span class="badge badge-normal">月考</span></h4>
+          <ul>
+            <li>国庆7天：安排3天主科深化（数学函数+几何、英语阅读+词汇、语文阅读），2天物理突破，2天政治/历史整理</li>
+            <li>月考前1周：全科模拟测试，查漏补缺</li>
+            <li>月考后：做试卷分析，用"失分归因表"分类（知识性/方法性/粗心性），针对性补弱</li>
+            <li>物理：开始系统使用错题本，每道错题标注"错因+正确思路+知识点"</li>
+            <li>数学：开始接触初二上学期几何证明题，训练逻辑推理书写规范</li>
+            <li>英语：词汇量第一轮检测，不达标加量</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 11月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">11月</div>
+          <div class="month-sub">期中考试</div>
+        </div>
+        <div class="timeline-content">
+          <h4>期中检验 · 第一阶段成果验收 <span class="badge badge-exam">期中</span></h4>
+          <ul>
+            <li>期中目标：主科87+，物理85+，政治50+/60，地理生物历史维持优秀</li>
+            <li>期中前2周：每科做2-3套往年真题，限时训练</li>
+            <li>期中后：全面复盘，找出进步科目和仍弱科目，调整下半学期策略</li>
+            <li>地理生物：进入"会考第一轮系统复习"（以课本+框架图为主，节奏轻量）</li>
+            <li>开始关注南京本地优质高中信息（南师附中、金陵中学等录取线）</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 12月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">12月</div>
+          <div class="month-sub">冲刺期末</div>
+        </div>
+        <div class="timeline-content">
+          <h4>期末冲刺 · 主科拔高 <span class="badge badge-key">冲刺</span></h4>
+          <ul>
+            <li>主科进入难题专项训练：数学函数与几何综合，语文阅读理解答题技巧，英语完形+阅读限时</li>
+            <li>物理：声学、光学期末复习，做透10套模拟卷</li>
+            <li>地理生物：完成会考第一轮知识点梳理（日常维持即可，不占大量时间）</li>
+            <li>政治：构建知识树，用"关键词记忆法"背诵核心考点，做真题材料分析题</li>
+            <li>历史：回顾时间线，保持手感</li>
+            <li>每日增加30分钟"错题重做"时间</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 1月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">1月</div>
+          <div class="month-sub">期末考试</div>
+        </div>
+        <div class="timeline-content">
+          <h4>期末考试 · 第一学期总验收 <span class="badge badge-exam">期末</span></h4>
+          <ul>
+            <li>期末目标：主科90+，物理88+，政治52+/60，地理生物历史优秀</li>
+            <li>考前1周：回归课本+错题本，不做新难题，保持手感</li>
+            <li>考后：做学期总结——进步了什么、还差什么、下学期调整方向</li>
+            <li>寒假计划制定：预估寒假10-15天，安排"主科补弱+物理预习+会考二轮"三模块</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">2月</div>
+          <div class="month-sub">寒假</div>
+        </div>
+        <div class="timeline-content">
+          <h4>寒假弯道 · 主科深化+物理力学预习 <span class="badge badge-key">关键期</span></h4>
+          <ul>
+            <li>每天保证5-6小时有效学习时间（上午3h+下午2-3h）</li>
+            <li><b>主科（每天3h）</b>：数学预习初二下函数（一次函数/反比例函数），英语完成词汇第二轮+阅读强化，语文精读1本名著+写2篇作文</li>
+            <li><b>物理（每天1h）</b>：预习下学期力学（力/运动和力/弹力/重力），提前熟悉概念</li>
+            <li><b>地理生物（每天各30min）</b>：完成会考第二轮系统复习（框架图+高频考点），因基础好，节奏可较轻</li>
+            <li>政治：完成七八年级全部知识点背诵</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">3月</div>
+          <div class="month-sub">开学+月考</div>
+        </div>
+        <div class="timeline-content">
+          <h4>下学期启航 · 力学攻坚 <span class="badge badge-normal">月考</span></h4>
+          <ul>
+            <li>物理力学是初二下最核心内容，也是中考重难点：力、牛顿第一定律、二力平衡、摩擦力</li>
+            <li>数学函数综合+几何证明进入深水区，开始做中考B类题</li>
+            <li>地理生物会考倒计时100天：基础好的优势下，进入"刷真题"阶段（每周各1套即可）</li>
+            <li>月考检验寒假预习成果</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">4月</div>
+          <div class="month-sub">期中+会考冲刺</div>
+        </div>
+        <div class="timeline-content">
+          <h4>期中考试 · 会考冲刺启动 <span class="badge badge-exam">期中</span></h4>
+          <ul>
+            <li>期中目标：主科92+，物理90+，政治53+/60，地理生物历史优秀</li>
+            <li>地理生物进入"刷题冲刺"：每周各2套往年真题/模拟卷（因基础好，无需每天刷）</li>
+            <li>整理会考高频考点清单，逐项确认掌握</li>
+            <li>数学开始系统做压轴题，每周3-5道</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 5月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">5月</div>
+          <div class="month-sub">会考冲刺</div>
+        </div>
+        <div class="timeline-content">
+          <h4>地理生物会考最后冲刺 <span class="badge badge-key">关键月</span></h4>
+          <ul>
+            <li>地理生物：每天各1小时（以真题+模拟为主，查漏补缺），因基础好，主要查漏而非从头学</li>
+            <li>整理"易错点清单"反复强化</li>
+            <li>主科维持节奏不放松：每天数学1h+英语1h+语文0.5h+物理1h</li>
+            <li>会考前1周：回归课本，扫读全部知识点，调整心态</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 6月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">6月</div>
+          <div class="month-sub">会考+期末</div>
+        </div>
+        <div class="timeline-content">
+          <h4>会考决战 · 期末终考 <span class="badge badge-exam">会考+期末</span></h4>
+          <ul>
+            <li><b>地理生物会考：目标双A</b> — 以该生目前98%/94%的水平，正常发挥即可达成</li>
+            <li>会考后全力冲刺期末：主科93+，物理90+</li>
+            <li>期末做全面复盘：一年成绩变化曲线，分析进步与不足</li>
+            <li>制定暑假计划：初三化学预习+物理电学预习+数学竞赛启蒙</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 7-8月 -->
+      <div class="timeline-item">
+        <div class="timeline-month">
+          <div class="month-label">7-8月</div>
+          <div class="month-sub">暑假</div>
+        </div>
+        <div class="timeline-content">
+          <h4>暑假衔接 · 冲刺初三 <span class="badge badge-key">衔接期</span></h4>
+          <ul>
+            <li>化学预习：初三新学科，提前学习"物质构成的奥秘""化学方程式"基础章节</li>
+            <li>物理电学预习：电路基础、欧姆定律初步概念</li>
+            <li>数学：系统复习初二全年+做中考真题中的初二相关部分</li>
+            <li>英语：完成中考词汇3500的第一轮背诵</li>
+            <li>语文：名著阅读2-3本+古诗文背诵积累</li>
+            <li>若成绩达标，可开始接触数学/物理竞赛启蒙内容，为高中竞赛/强基打基础</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. 各科提升策略 ===== -->
+<section id="sec-strategy" style="background:#ede4d3;">
+  <div class="container">
+    <div class="section-title">
+      <span class="num">4</span>
+      <h2>各科提升策略</h2>
+      <span class="line"></span>
+    </div>
+
+    <div class="subject-tabs">
+      <button class="tab-btn active" onclick="showSubject(event,'chinese')">语文 81.5→93+</button>
+      <button class="tab-btn" onclick="showSubject(event,'math')">数学 83.5→95+</button>
+      <button class="tab-btn" onclick="showSubject(event,'english')">英语 84→95+</button>
+      <button class="tab-btn" onclick="showSubject(event,'physics')">物理 新课→92+</button>
+      <button class="tab-btn" onclick="showSubject(event,'geo')">地理 49/50→A</button>
+      <button class="tab-btn" onclick="showSubject(event,'bio')">生物 47/50→A</button>
+      <button class="tab-btn" onclick="showSubject(event,'politics')">政治 44/60→54+</button>
+      <button class="tab-btn" onclick="showSubject(event,'history')">历史 55/60→57+</button>
+    </div>
+
+    <!-- 语文 -->
+    <div class="subject-panel active" id="chinese">
+      <h3>语文 <span class="tag" style="background:#e3f2fd;color:#1565c0;">81.5/100 → 93+ （提分 +11.5）</span></h3>
+      <div class="strategy-block">
+        <h4>核心问题诊断与93+达标路径</h4>
+        <p>81.5分（得分率81.5%）说明基础框架尚可，但阅读理解和作文是两大失分重灾区。文言文翻译、现代文赏析答题不规范，作文缺乏深度素材和结构训练。<b>93+意味着基础模块不丢分+阅读理解达标+作文一类卷</b>。语文是<b>学科特长生加试公共卷科目（90/400=22.5%）</b>，93+的校内成绩是参加特长生加试的门槛条件。</p>
+      </div>
+      <div class="strategy-block">
+        <h4>基础模块（目标：不丢分）</h4>
+        <ul>
+          <li>课内古诗文默写：100%正确率，每周听写1次，错字反复纠正</li>
+          <li>字音字形：建立"易错字本"，每天5分钟翻看</li>
+          <li>文学常识：随课文整理，用卡片记忆法</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>阅读理解（目标：提5-8分）</h4>
+        <ul>
+          <li>每周精练3篇现代文阅读（记叙文+说明文+议论文），限时完成</li>
+          <li>掌握答题公式：如"赏析题=手法+内容+效果+情感"，"含义题=表层义+深层义+主旨"</li>
+          <li>建立"题型-答题模板"对应表，考试时快速调用</li>
+          <li>文言文：每天1篇课外短文练习，积累120个实词+15个虚词用法</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>作文（目标：提3-5分）</h4>
+        <ul>
+          <li>素材积累本：每周收集2个好素材（人物事迹+金句），分类标注适用主题</li>
+          <li>结构训练：掌握"凤头-猪肚-豹尾"结构，准备3-5篇可套用的高质量范文</li>
+          <li>每两周写1篇完整作文，请老师批改后修改重写</li>
+          <li>多读《读者》《青年文摘》等，提升语言质感</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>每日时间分配</h4>
+        <ul>
+          <li>基础（默写/字词）：10分钟</li>
+          <li>阅读理解练习：15分钟</li>
+          <li>文言文积累：10分钟</li>
+          <li>素材/作文：15分钟（周末集中写完整作文）</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 数学 -->
+    <div class="subject-panel" id="math">
+      <h3>数学 <span class="tag" style="background:#e3f2fd;color:#1565c0;">83.5/100 → 96+ （提分 +12.5 · 学科特长生 · 哈工大核心）</span></h3>
+      <div class="strategy-block">
+        <h4>核心问题诊断与96+达标路径</h4>
+        <p>83.5分说明基础题掌握不错（预计得分75-78分），但中等偏难题和压轴题丢分严重（预计丢7-10分）。<b>96+意味着基础题零失误+中档题全对+压轴题拿分</b>。数学是<b>学科特长生加试公共卷最高权重科目（120/400=30%）</b>，96+的校内成绩是参加特长生加试的门槛条件。</p>
+      </div>
+      <div class="strategy-block">
+        <h4>第一阶段：基础锁分（9-11月）— 目标90+</h4>
+        <ul>
+          <li><b>每日5道同步练习</b>（基础→中等），确保课内知识100%掌握</li>
+          <li>错题本启用：每道错题写"错因分析+正确解法+知识点标签"，每周日重做本周错题</li>
+          <li>重点关注：全等三角形证明（SSS/SAS/ASA/AAS）、轴对称、实数运算、一次函数图象与性质</li>
+          <li>每次考试后做"失分归因表"：知识性失分vs方法性失分vs粗心失分，针对性改进</li>
+          <li><b>月考目标</b>：90+（基础题不丢分，中档题正确率85%+）</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>第二阶段：中档突破（12月-次年2月）— 目标93+</h4>
+        <ul>
+          <li>每天加做<b>3-4道中等偏难题</b>（中考B类难度：几何证明综合、函数与方程综合）</li>
+          <li>专题突破：几何证明辅助线技巧（截长补短/旋转/翻折）、一次函数与几何综合</li>
+          <li>每周做1套限时小测验（45分钟），训练速度和准确率，目标得分率90%+</li>
+          <li>开始接触<b>竞赛启蒙</b>：《奥数教程》初二卷每周2-3题，拓展思维</li>
+          <li><b>期末目标</b>：93+（基础题全对，中档题全对，压轴题拿步骤分）</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>第三阶段：压轴攻坚+竞赛启蒙（3-6月）— 目标96+</h4>
+        <ul>
+          <li>每周精做<b>5-8道压轴题</b>（中考C类），限时30分钟/题，重在思路完整性</li>
+          <li>建立压轴题"思路卡"：读题→提取条件→关联知识点→尝试方法→验证</li>
+          <li>重点题型：二次函数与几何综合、动点问题、存在性问题、最值问题</li>
+          <li>竞赛启蒙升级：华罗庚金杯/希望杯真题每周3-5题，接触数论与组合数学</li>
+          <li>寒暑假加做《数学奥林匹克小丛书·初中卷》第1-3册，为特长卷打基础</li>
+          <li><b>期末目标</b>：96+（基础+中档全对，压轴题拿80%+分值）</li>
+        </ul>
+      </div>
+      <div class="strategy-block" style="border-left-color:var(--accent); background:#fff8e1;">
+        <h4 style="color:var(--accent);">竞赛准备路线（数学特长生方向）</h4>
+        <ul>
+          <li><b>初二上学期</b>：《奥数教程》初二卷（华东师大版），每周2-3题，重点：整式与分式进阶、全等三角形进阶</li>
+          <li><b>初二下学期</b>：开始刷希望杯/华罗庚金杯真题，每周1套（限90分钟），重点：数论基础、组合计数、抽屉原理</li>
+          <li><b>初二暑假</b>：系统学习《数学奥林匹克小丛书》初中卷1-3册（因式分解/整除与同余/几何）</li>
+          <li><b>初三上学期</b>：参加全国初中数学联赛（省赛），目标省三等奖以上</li>
+          <li><b>竞赛与特长卷关系</b>：竞赛训练直接提升特长卷（20分）的解题能力，特长卷难度≈初中数学联赛二试题</li>
+        </ul>
+      </div>
+      <div class="strategy-block" style="border-left-color:var(--accent); background:#fff8e1;">
+        <h4 style="color:var(--accent);">特长卷训练方案（数学特长卷20分）</h4>
+        <ul>
+          <li><b>卷面结构</b>：通常2-3道解答题，满分20分，考查代数综合+几何综合+数论/组合</li>
+          <li><b>训练教材</b>：《初中数学竞赛培优教程》（浙江大学出版社）、《数学奥林匹克小丛书》初中卷</li>
+          <li><b>训练节奏</b>：初二暑假启动，每周2次专项训练（每次60分钟），每次2-3道竞赛级题目</li>
+          <li><b>核心模块</b>：①整数的整除性与同余 ②一次函数与二次函数综合 ③几何证明进阶（圆/相似三角形预习） ④组合计数与抽屉原理</li>
+          <li><b>公共卷数学备考</b>：公共卷数学120分（占比30%），难度≈中考中上，需做到快速准确。每周1套公共卷数学模拟（限40分钟），目标100+/120</li>
+          <li><b>时间节点</b>：2027暑假全面启动，2028年1月进入冲刺，2028年4月做模拟卷+真题演练</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>每日时间分配</h4>
+        <ul>
+          <li>课内作业：30-35分钟</li>
+          <li>额外练习（拔高题/竞赛题）：25分钟</li>
+          <li>错题整理/回顾：10分钟</li>
+          <li>周末：1套综合卷+1次竞赛专题突破（90分钟）</li>
+          <li><b>暑假加码</b>：每日竞赛训练60分钟+公共卷模拟1套/周</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 英语 -->
+    <div class="subject-panel" id="english">
+      <h3>英语 <span class="tag" style="background:#e3f2fd;color:#1565c0;">84/100 → 95+ （提分 +11 · 哈工大核心）</span></h3>
+      <div class="strategy-block">
+        <h4>核心问题诊断与95+达标路径</h4>
+        <p>84分说明词汇和语法基础还在，但完形填空和阅读理解是主要瓶颈。听力可能也有失分。<b>95+意味着词汇1600全过关+阅读理解正确率90%+完形填空正确率85%+</b>。英语是<b>学科特长生加试公共卷科目（80/400=20%）</b>，虽然权重最低但不可忽视。该生小科记忆能力强（地理98%、历史92%），同样的记忆能力用于英语词汇将非常高效。</p>
+      </div>
+      <div class="strategy-block">
+        <h4>词汇突破（最优先）</h4>
+        <ul>
+          <li>每天背30个新词，使用"艾宾浩斯遗忘曲线"复习表：1天/2天/4天/7天/15天循环</li>
+          <li>初二结束时，中考核心词汇（约1600词）全部过关</li>
+          <li>用"词根词缀法"加速记忆，减少死记硬背</li>
+          <li>每周1次词汇测试，不达标的词加量复习</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>阅读理解（提分核心）</h4>
+        <ul>
+          <li>每天2篇阅读理解+1篇完形填空，限时完成（每篇7-8分钟）</li>
+          <li>建立"生词本"：阅读中遇到的生词全部记录，纳入每日复习</li>
+          <li>训练题型识别：主旨题/细节题/推断题/词义题，每种掌握对应解题法</li>
+          <li>每周读1篇英语短文（21st Century Teens级别），提升语感</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>语法与写作</h4>
+        <ul>
+          <li>语法：每周1个专题（时态/语态/从句/非谓语），做专项练习20题</li>
+          <li>写作：每两周1篇，学习使用高级句型（定语从句、状语从句）</li>
+          <li>背诵10篇优秀范文，掌握万能句型和段落结构</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>听力</h4>
+        <ul>
+          <li>每天15分钟听力训练（课文音频/中考真题听力）</li>
+          <li>精听+泛听结合：精听逐句跟读，泛听抓大意</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>每日时间分配</h4>
+        <ul>
+          <li>背单词+复习：15分钟（早晚各1次效果更好）</li>
+          <li>阅读+完形练习：20分钟</li>
+          <li>听力：15分钟</li>
+          <li>语法/写作：周末集中1小时</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 物理 -->
+    <div class="subject-panel" id="physics">
+      <h3>物理 <span class="tag" style="background:#fff3e0;color:#e65100;">新课 · 目标93+ · 学科特长生 · 哈工大第一核心</span></h3>
+      <div class="strategy-block">
+        <h4>战略定位与93+达标路径</h4>
+        <p>物理是初二全新学科，也是未来冲击哈工大强基计划/竞赛的核心科目。初二物理（声光力）是整个中学物理的地基，<b>93+意味着基础概念零失误+计算题规范+实验题不丢分+难题拿步骤分</b>。物理是<b>学科特长生加试公共卷核心科目（110/400=27.5%）</b>，93+的校内成绩是参加特长生加试的门槛。高中选科须选<b>物理+化学</b>（哈工大65%专业要求物化双选）。</p>
+      </div>
+      <div class="strategy-block">
+        <h4>上学期：声光学（9-1月）— 目标88+</h4>
+        <ul>
+          <li>紧跟课堂节奏，做到"今日物理今日毕"，绝不拖延</li>
+          <li>声学：声音的产生/传播/特性，理解记忆+计算题规范</li>
+          <li>光学：光的直线传播/反射/折射/凸透镜成像——上学期重难点</li>
+          <li>凸透镜成像规律：制作"成像卡片"，反复练习物距变化→像的性质变化</li>
+          <li>每章做透课本练习+同步教辅15题，确保正确率<b>90%以上</b></li>
+          <li><b>期中目标</b>：88+（声光学基础扎实，实验题不丢分）</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>下学期：力学（2-6月）— 目标93+</h4>
+        <ul>
+          <li>力学是初二物理最核心、中考占比最大的部分，也是特长卷重点考查内容</li>
+          <li>力的概念/三要素/示意图：基础中的基础，画图必须规范</li>
+          <li>牛顿第一定律/惯性：理解"维持运动不需要力"这一反直觉概念</li>
+          <li>二力平衡/摩擦力：受力分析是核心技能，<b>每天练3-5个受力分析图</b></li>
+          <li>压强/浮力（部分学校在初二下）：计算题多，公式熟练度要求高</li>
+          <li>每周加做<b>5-8道力学综合题</b>，训练多力分析+计算规范</li>
+          <li><b>期末目标</b>：93+（声光力学全面扎实，综合题拿80%+分值）</li>
+        </ul>
+      </div>
+      <div class="strategy-block" style="border-left-color:var(--accent); background:#fff8e1;">
+        <h4 style="color:var(--accent);">竞赛准备路线（物理特长生方向）</h4>
+        <ul>
+          <li><b>初二上学期</b>：紧跟课内，额外阅读《初中物理竞赛培优教程》（浙江版）声光学部分，每周1-2道竞赛题</li>
+          <li><b>初二下学期</b>：力学竞赛题专项，每周2-3道全国初中应用物理知识竞赛真题，重点：受力分析进阶、压强浮力综合</li>
+          <li><b>初二暑假</b>：系统预习初三电学+热学（《初中物理竞赛教程》），为初三竞赛做准备</li>
+          <li><b>初三上学期</b>：参加全国初中应用物理知识竞赛，目标省一等奖</li>
+          <li><b>竞赛与特长卷关系</b>：竞赛训练直接提升特长卷（20分）解题能力，特长卷难度≈物理竞赛初赛水平</li>
+        </ul>
+      </div>
+      <div class="strategy-block" style="border-left-color:var(--accent); background:#fff8e1;">
+        <h4 style="color:var(--accent);">特长卷训练方案（物理特长卷20分）</h4>
+        <ul>
+          <li><b>卷面结构</b>：通常2-3道综合题，满分20分，考查力学综合+电学综合+实验探究</li>
+          <li><b>训练教材</b>：《初中物理竞赛培优教程》（浙江大学出版社）、《全国初中物理竞赛教程》</li>
+          <li><b>训练节奏</b>：初二暑假启动，每周2次专项训练（每次60分钟），每次2-3道竞赛级题目</li>
+          <li><b>核心模块</b>：①受力分析综合（多力平衡/摩擦力进阶） ②压强与浮力综合 ③简单机械与功 ④电学预习（初三内容提前学） ⑤实验探究题（设计性实验）</li>
+          <li><b>公共卷物理备考</b>：公共卷物理110分（占比27.5%），难度≈中考中等偏上。每周1套公共卷物理模拟（限35分钟），目标90+/110</li>
+          <li><b>时间节点</b>：2027暑假全面启动，2028年1月进入冲刺，2028年4月做模拟卷+真题演练</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>物理学习方法论</h4>
+        <ul>
+          <li><b>概念优先</b>：物理不是背公式，是理解物理情景。每个公式都要知道"适用条件"</li>
+          <li><b>画图习惯</b>：力学的受力分析图、光学的光路图——画图就是解题</li>
+          <li><b>实验思维</b>：关注实验原理、控制变量法、实验结论表述——中考必考，也是特长卷重点</li>
+          <li><b>错题本</b>：每道错题标注"错因+涉及概念+正确分析过程"</li>
+          <li><b>提前接触</b>：寒暑假预习初三电学/热学，为物理竞赛和特长卷做准备</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>每日时间分配</h4>
+        <ul>
+          <li>课内作业+同步练习：25分钟</li>
+          <li>错题整理：10分钟</li>
+          <li>概念回顾/预习：10分钟</li>
+          <li>竞赛题/拔高练习：15分钟（周末加至45分钟）</li>
+          <li>周末：1套单元卷+1次竞赛专题（60分钟）</li>
+          <li><b>暑假加码</b>：每日竞赛训练45分钟+公共卷模拟1套/周</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 地理 -->
+    <div class="subject-panel" id="geo">
+      <h3>地理 <span class="tag" style="background:#e8f5e9;color:#2e7d32;">49/50 (98%) → 会考A · 保持优势</span></h3>
+      <div class="strategy-block">
+        <h4>现状评估</h4>
+        <p>49/50（98%）— 优秀水平！地理是该生的优势科目，6月会考拿到A等几乎没有悬念。<b>策略核心是"保持而非追赶"</b>，用最少的时间维持优势，把腾出的精力投入主科突破。</p>
+      </div>
+      <div class="strategy-block">
+        <h4>会考备考节奏（轻量版）</h4>
+        <ul>
+          <li><b>9-11月</b>：每周做1套模拟题保持手感，不用额外大量投入</li>
+          <li><b>12月-次年2月</b>：寒假完成会考第一轮知识框架梳理（每天30分钟即可）</li>
+          <li><b>3-4月</b>：每周2套真题，查漏补缺</li>
+          <li><b>5月</b>：每天1小时，重点攻克易错点</li>
+          <li><b>6月会考前1周</b>：回归课本，看图表</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>维持技巧</h4>
+        <ul>
+          <li>地图是灵魂：偶尔翻看空白地图册填图，保持空间记忆</li>
+          <li>关注新闻中的地理信息（自然灾害/气候事件），保持学科敏感度</li>
+          <li>不需要额外报班或大量刷题，课堂+少量练习足矣</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 生物 -->
+    <div class="subject-panel" id="bio">
+      <h3>生物 <span class="tag" style="background:#e8f5e9;color:#2e7d32;">47/50 (94%) → 会考A · 保持优势</span></h3>
+      <div class="strategy-block">
+        <h4>现状评估</h4>
+        <p>47/50（94%）— 优秀水平！生物同样是优势科目。比地理略低3分，但94%的得分率距离A等（90+）已有余量。<b>策略与地理一致：轻量维持，重点在5-6月集中冲刺</b>。</p>
+      </div>
+      <div class="strategy-block">
+        <h4>会考备考节奏（轻量版）</h4>
+        <ul>
+          <li><b>9-11月</b>：每周做1套模拟题保持手感</li>
+          <li><b>12月-次年2月</b>：寒假完成会考第一轮知识点梳理（每天30分钟即可）</li>
+          <li><b>3-4月</b>：每周2套真题，重点复习人体生理（高频考点）</li>
+          <li><b>5月</b>：每天1小时，做真题+整理实验题</li>
+          <li><b>6月会考前1周</b>：回归课本，看插图和实验</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>维持技巧</h4>
+        <ul>
+          <li>重点复习"人体七大系统"——会考出题最密集的部分</li>
+          <li>实验设计题：掌握"对照组设置/单一变量/重复实验"三原则</li>
+          <li>不需要额外报班或大量刷题，课堂+少量练习足矣</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 政治 -->
+    <div class="subject-panel" id="politics">
+      <h3>政治 <span class="tag" style="background:#fff8e1;color:#e65100;">44/60 (73%) → 54+/60 （提分 +10）</span></h3>
+      <div class="strategy-block">
+        <h4>现状评估</h4>
+        <p>44/60（73.3%）是小科中唯一的薄弱项。但按60分制，只需提升10分即可达到54+/60（90%），难度远小于主科提分。政治是记忆+答题技巧型科目，投入2-3个月即可见效。</p>
+      </div>
+      <div class="strategy-block">
+        <h4>提分策略</h4>
+        <ul>
+          <li><b>9-10月</b>：通读教材，每课做知识框架图（每课1页A4纸）</li>
+          <li><b>11-12月</b>：背诵核心考点——用"关键词记忆法"，每段话记3-5个关键词</li>
+          <li><b>寒假</b>：完成七八年级全部知识点的背诵过关</li>
+          <li><b>3-6月</b>：做真题+模拟题，重点训练"材料分析题"答题规范</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>答题技巧</h4>
+        <ul>
+          <li>选择题：排除法+直选法结合，注意"绝对化表述"通常是错的</li>
+          <li>材料分析题公式："教材知识点+材料分析+结论"三段式答题</li>
+          <li>切忌只抄材料不联系课本——阅卷按"知识点+材料结合"给分</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 历史 -->
+    <div class="subject-panel" id="history">
+      <h3>历史 <span class="tag" style="background:#e8f5e9;color:#2e7d32;">55/60 (92%) → 57+ · 保持优势</span></h3>
+      <div class="strategy-block">
+        <h4>现状评估</h4>
+        <p>55/60（91.7%）— 良好水平！历史已是优势科目，只需轻微提升即可冲到57+/60（95%）。<b>不需要大量投入</b>，维持课堂效率+偶尔练习即可。</p>
+      </div>
+      <div class="strategy-block">
+        <h4>维持策略</h4>
+        <ul>
+          <li>课堂效率第一：认真听讲+记笔记，跟上老师节奏</li>
+          <li>每周做1套同步练习题保持手感</li>
+          <li>考前2周：回顾时间线+核心事件因果关系</li>
+        </ul>
+      </div>
+      <div class="strategy-block">
+        <h4>学习方法</h4>
+        <ul>
+          <li><b>时间轴法</b>：把中国史和世界史画在同一条时间轴上，建立横向联系</li>
+          <li><b>因果链条</b>：每个重大事件记"原因→经过→结果→影响"四要素</li>
+          <li><b>口诀记忆</b>：朝代顺序"夏商周秦汉魏晋南北朝隋唐五代辽宋夏金元明清"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4.5 学科特长生备考专题 ===== -->
+<section id="sec-special" style="background:#1a3a5c; color:#fff;">
+  <div class="container">
+    <div class="section-title">
+      <span class="num" style="background:var(--accent);">4.5</span>
+      <h2 style="color:var(--accent-light);">学科特长生备考专题</h2>
+      <span class="line" style="background:linear-gradient(90deg, var(--accent), transparent);"></span>
+    </div>
+
+    <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:24px; margin-bottom:20px;">
+      <h3 style="font-family:'Noto Serif SC',serif; font-size:20px; color:var(--accent-light); margin-bottom:12px;">加试总分结构（420分 → 折算100分）</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:16px;">
+        <div style="background:rgba(52,152,219,0.15); border:1px solid rgba(52,152,219,0.3); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:28px; font-family:'Noto Serif SC',serif; color:#3498db; font-weight:700;">90<span style="font-size:14px;opacity:0.7;">分</span></div>
+          <div style="font-size:13px; opacity:0.8; margin-top:4px;">语文 · 公共卷22.5%</div>
+        </div>
+        <div style="background:rgba(212,160,23,0.15); border:1px solid rgba(212,160,23,0.3); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:28px; font-family:'Noto Serif SC',serif; color:var(--accent-light); font-weight:700;">120<span style="font-size:14px;opacity:0.7;">分</span></div>
+          <div style="font-size:13px; opacity:0.8; margin-top:4px;">数学 · 公共卷30% <span style="color:var(--accent-light);">最高权重</span></div>
+        </div>
+        <div style="background:rgba(52,152,219,0.15); border:1px solid rgba(52,152,219,0.3); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:28px; font-family:'Noto Serif SC',serif; color:#3498db; font-weight:700;">80<span style="font-size:14px;opacity:0.7;">分</span></div>
+          <div style="font-size:13px; opacity:0.8; margin-top:4px;">英语 · 公共卷20%</div>
+        </div>
+        <div style="background:rgba(230,126,34,0.15); border:1px solid rgba(230,126,34,0.3); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:28px; font-family:'Noto Serif SC',serif; color:var(--warning); font-weight:700;">110<span style="font-size:14px;opacity:0.7;">分</span></div>
+          <div style="font-size:13px; opacity:0.8; margin-top:4px;">物理 · 公共卷27.5%</div>
+        </div>
+        <div style="background:rgba(192,57,43,0.15); border:1px solid rgba(192,57,43,0.3); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:28px; font-family:'Noto Serif SC',serif; color:var(--danger); font-weight:700;">20<span style="font-size:14px;opacity:0.7;">分</span></div>
+          <div style="font-size:13px; opacity:0.8; margin-top:4px;">特长卷 · 报考科目</div>
+        </div>
+      </div>
+      <p style="font-size:13px; opacity:0.8; line-height:1.7;">公共卷400分 + 特长卷20分 = 420分，最终折算成100分计算。<b style="color:var(--accent-light);">数理合计230分占公共卷57.5%</b>，是该生突破方向。金陵中学等校强调"主要看公共卷"，数学物理占比更高。</p>
+    </div>
+
+    <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:24px; margin-bottom:20px;">
+      <h3 style="font-family:'Noto Serif SC',serif; font-size:20px; color:var(--accent-light); margin-bottom:16px;">备考时间轴（2027.07 → 2028.05）</h3>
+      <div class="path-steps">
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(52,152,219,0.3);">
+          <div class="step-num">①</div>
+          <h4 style="color:var(--accent-light);">2027.07-08 暑假启动</h4>
+          <p style="opacity:0.8; font-size:12px;">公共卷模拟启动（每周1套全科卷），竞赛系统训练（数学/物理各60分钟/天），特长卷专项启动（每周2次×60分钟）</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(155,89,182,0.3);">
+          <div class="step-num">②</div>
+          <h4 style="color:var(--accent-light);">2027.09-12 初三上</h4>
+          <p style="opacity:0.8; font-size:12px;">校内保持93+，公共卷每周2套（数理重点），竞赛参加省赛，特长卷每周3次。12月做第一次全真模拟</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(212,160,23,0.4);">
+          <div class="step-num">③</div>
+          <h4 style="color:var(--accent-light);">2028.01-03 冲刺期</h4>
+          <p style="opacity:0.8; font-size:12px;">公共卷每周3套全真模拟，特长卷每天1套（20分限时30分钟），竞赛二试训练，薄弱模块专项突破</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(39,174,96,0.3);">
+          <div class="step-num">④</div>
+          <h4 style="color:var(--accent-light);">2028.04-05 考前</h4>
+          <p style="opacity:0.8; font-size:12px;">做近3年各校真题（南师附中/金陵中学），回归基础不钻偏题，调整心态，保持手感。5月参加加试</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
+      <div style="background:rgba(212,160,23,0.1); border:1px solid rgba(212,160,23,0.3); border-radius:12px; padding:20px;">
+        <h4 style="color:var(--accent-light); font-size:16px; margin-bottom:10px;">数学特长生方案</h4>
+        <ul style="font-size:13px; line-height:1.8; opacity:0.85; padding-left:18px;">
+          <li><b>公共卷数学目标</b>：100+/120（正确率83%+）</li>
+          <li><b>特长卷目标</b>：12+/20（拿60%分值）</li>
+          <li><b>竞赛路线</b>：初二希望杯→初三全国初中数学联赛（省三以上）</li>
+          <li><b>核心教材</b>：《奥数教程》初二/初三卷、《数学奥林匹克小丛书》初中卷1-5册、《初中数学竞赛培优教程》</li>
+          <li><b>训练重点</b>：数论（整除/同余）、组合（抽屉/计数）、几何（圆/相似）、代数（不等式/函数综合）</li>
+          <li><b>每周训练量</b>：竞赛题15-20道 + 公共卷模拟1套 + 特长卷模拟1套</li>
+        </ul>
+      </div>
+      <div style="background:rgba(230,126,34,0.1); border:1px solid rgba(230,126,34,0.3); border-radius:12px; padding:20px;">
+        <h4 style="color:var(--warning); font-size:16px; margin-bottom:10px;">物理特长生方案</h4>
+        <ul style="font-size:13px; line-height:1.8; opacity:0.85; padding-left:18px;">
+          <li><b>公共卷物理目标</b>：90+/110（正确率82%+）</li>
+          <li><b>特长卷目标</b>：12+/20（拿60%分值）</li>
+          <li><b>竞赛路线</b>：初二力学竞赛题→初三全国初中应用物理知识竞赛（省一）</li>
+          <li><b>核心教材</b>：《初中物理竞赛培优教程》（浙江版）、《全国初中物理竞赛教程》、人教版初三物理（提前学电学/热学）</li>
+          <li><b>训练重点</b>：受力分析综合、压强浮力综合、简单机械与功、电学综合（初三提前学）、实验探究题</li>
+          <li><b>每周训练量</b>：竞赛题10-15道 + 公共卷模拟1套 + 特长卷模拟1套</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:20px;">
+      <h4 style="color:var(--accent-light); font-size:16px; margin-bottom:10px;">公共卷四科目标分数与训练计划</h4>
+      <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <thead>
+          <tr style="border-bottom:2px solid rgba(212,160,23,0.4);">
+            <th style="text-align:left; padding:10px; color:var(--accent-light);">科目</th>
+            <th style="text-align:center; padding:10px; color:var(--accent-light);">满分</th>
+            <th style="text-align:center; padding:10px; color:var(--accent-light);">目标分</th>
+            <th style="text-align:center; padding:10px; color:var(--accent-light);">正确率</th>
+            <th style="text-align:left; padding:10px; color:var(--accent-light);">每周训练计划</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+            <td style="padding:10px;">数学</td>
+            <td style="text-align:center; padding:10px;">120</td>
+            <td style="text-align:center; padding:10px; color:var(--success); font-weight:600;">100+</td>
+            <td style="text-align:center; padding:10px;">83%+</td>
+            <td style="padding:10px; opacity:0.8;">限时模拟1套（40分钟）+ 压轴题专项5道</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+            <td style="padding:10px;">物理</td>
+            <td style="text-align:center; padding:10px;">110</td>
+            <td style="text-align:center; padding:10px; color:var(--success); font-weight:600;">90+</td>
+            <td style="text-align:center; padding:10px;">82%+</td>
+            <td style="padding:10px; opacity:0.8;">限时模拟1套（35分钟）+ 力学综合3道</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+            <td style="padding:10px;">语文</td>
+            <td style="text-align:center; padding:10px;">90</td>
+            <td style="text-align:center; padding:10px; color:var(--success); font-weight:600;">75+</td>
+            <td style="text-align:center; padding:10px;">83%+</td>
+            <td style="padding:10px; opacity:0.8;">阅读理解2篇 + 文言文1篇（30分钟）</td>
+          </tr>
+          <tr>
+            <td style="padding:10px;">英语</td>
+            <td style="text-align:center; padding:10px;">80</td>
+            <td style="text-align:center; padding:10px; color:var(--success); font-weight:600;">68+</td>
+            <td style="text-align:center; padding:10px;">85%+</td>
+            <td style="padding:10px; opacity:0.8;">完形1篇 + 阅读2篇（25分钟）</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px; opacity:0.7; margin-top:12px;">公共卷合计目标：333+/400（83%+）+ 特长卷12+/20 = 折算88+/100。开考比例1:7，需排名前列方可录取。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. 每日时间表 ===== -->
+<section id="sec-schedule">
+  <div class="container">
+    <div class="section-title">
+      <span class="num">5</span>
+      <h2>每日时间表 & 每周计划</h2>
+      <span class="line"></span>
+    </div>
+
+    <p style="font-size:14px; color:var(--text-light); margin-bottom:20px;">
+      <b>时间分配原则</b>：主科（语数英）占每日自学时间的55%，物理占20%，政治占10%，地理生物历史占15%（以维持为主，不需大量时间）。
+    </p>
+
+    <div class="schedule-wrapper">
+      <div class="schedule-card">
+        <div class="card-header">📖 上学日时间表（周一至周五）</div>
+        <div class="card-body">
+          <div class="time-row"><span class="time">06:40-06:50</span><span class="activity">起床洗漱</span></div>
+          <div class="time-row"><span class="time">06:50-07:10</span><span class="activity">英语晨读（背单词/朗读课文）</span></div>
+          <div class="time-row"><span class="time">07:10-07:25</span><span class="activity">早餐</span></div>
+          <div class="time-row"><span class="time">07:25-07:45</span><span class="activity">上学路上（可听英语听力音频）</span></div>
+          <div class="time-row"><span class="time">07:45-18:00</span><span class="activity">在校上课（课堂效率第一！不走神、记笔记、积极互动）</span></div>
+          <div class="time-row"><span class="time">18:00-18:50</span><span class="activity">回家+晚餐+短暂休息</span></div>
+          <div class="time-row"><span class="time">18:50-19:20</span><span class="activity">英语（阅读理解2篇+完形1篇 / 单词复习）</span></div>
+          <div class="time-row"><span class="time">19:20-20:00</span><span class="activity">数学（作业+拔高题2-3道）</span></div>
+          <div class="time-row"><span class="time">20:00-20:30</span><span class="activity">物理（作业+概念回顾+错题）</span></div>
+          <div class="time-row"><span class="time">20:30-20:40</span><span class="activity">休息10分钟（远眺/活动）</span></div>
+          <div class="time-row"><span class="time">20:40-21:05</span><span class="activity">语文（阅读理解/文言文/素材积累）</span></div>
+          <div class="time-row"><span class="time">21:05-21:40</span><span class="activity">小科轮换（地/生/政/史，见下方轮换表）</span></div>
+          <div class="time-row"><span class="time">21:40-21:55</span><span class="activity">当日错题整理+明日预习</span></div>
+          <div class="time-row"><span class="time">21:55-22:15</span><span class="activity">洗漱+自由阅读（课外书/睡前放松）</span></div>
+          <div class="time-row"><span class="time">22:15</span><span class="activity">入睡（保证8小时睡眠，不熬夜）</span></div>
+        </div>
+      </div>
+
+      <div class="schedule-card">
+        <div class="card-header">📅 周末时间表（周六+周日）</div>
+        <div class="card-body">
+          <div class="time-row"><span class="time">07:00-07:30</span><span class="activity">起床+英语晨读</span></div>
+          <div class="time-row"><span class="time">07:30-08:00</span><span class="activity">早餐</span></div>
+          <div class="time-row"><span class="time">08:00-09:30</span><span class="activity">数学专项（1.5h：做综合卷/专题突破）</span></div>
+          <div class="time-row"><span class="time">09:30-09:45</span><span class="activity">休息</span></div>
+          <div class="time-row"><span class="time">09:45-11:00</span><span class="activity">物理专项（1h+：做套卷/实验题/预习）</span></div>
+          <div class="time-row"><span class="time">11:00-12:00</span><span class="activity">英语听力+阅读限时训练</span></div>
+          <div class="time-row"><span class="time">12:00-13:00</span><span class="activity">午餐+休息</span></div>
+          <div class="time-row"><span class="time">13:00-14:00</span><span class="activity">午休（保证30-40分钟）</span></div>
+          <div class="time-row"><span class="time">14:00-15:00</span><span class="activity">语文（阅读+作文/文言文精练）</span></div>
+          <div class="time-row"><span class="time">15:00-15:30</span><span class="activity">地理+生物（各15min，做1套模拟保持手感）</span></div>
+          <div class="time-row"><span class="time">15:30-15:45</span><span class="activity">休息</span></div>
+          <div class="time-row"><span class="time">15:45-16:30</span><span class="activity">政治/历史（轮换，各45分钟）</span></div>
+          <div class="time-row"><span class="time">16:30-17:30</span><span class="activity">运动（跳绳/跑步30分钟）</span></div>
+          <div class="time-row"><span class="time">17:30-19:00</span><span class="activity">晚餐+家庭时间</span></div>
+          <div class="time-row"><span class="time">19:00-20:30</span><span class="activity">本周错题全部重做一遍</span></div>
+          <div class="time-row"><span class="time">20:30-21:00</span><span class="activity">课外阅读（名著/科普）</span></div>
+          <div class="time-row"><span class="time">21:00-22:00</span><span class="activity">自由时间（放松/兴趣）</span></div>
+          <div class="time-row"><span class="time">22:00</span><span class="activity">入睡</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:24px;">
+      <strong>小科轮换表（周一至周五晚间 21:05-21:40，约35分钟）：</strong><br>
+      <b>周一</b>：地理15min（做1套模拟/翻看地图）+ 历史20min（看课本/做练习）<br>
+      <b>周二</b>：政治35min（通读教材/背诵知识点）<br>
+      <b>周三</b>：生物15min（做1套模拟）+ 历史20min（时间线回顾）<br>
+      <b>周四</b>：政治35min（做真题/材料分析题）<br>
+      <b>周五</b>：本周小科错题/薄弱点集中复习35min<br>
+      <br>
+      <em>注：地理生物历史基础好，每日投入较少；政治需要额外加强，故安排2天/周</em>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5.5 成绩追踪 ===== -->
+<section id="sec-score" style="background:#ede4d3;">
+  <div class="container">
+    <div class="section-title">
+      <span class="num" style="background:var(--accent);">5.5</span>
+      <h2>成绩追踪打卡</h2>
+      <span class="line"></span>
+    </div>
+    <p style="font-size:14px; color:var(--text-light); margin-bottom:16px;">输入每次考试的实际成绩，系统自动计算与目标的差距和完成进度。<b>数据保存在本地浏览器</b>，下次打开自动恢复。</p>
+
+    <div class="score-tracker">
+      <h3 style="font-family:'Noto Serif SC',serif; font-size:18px; color:var(--primary); margin-bottom:16px;">期中考试成绩录入</h3>
+      <div id="score-tracker-list"></div>
+      <div style="margin-top:16px; display:flex; gap:10px;">
+        <button class="action-btn primary" onclick="saveScores()">保存成绩</button>
+        <button class="action-btn" onclick="resetScores()">清空</button>
+      </div>
+      <div id="score-saved-tip" style="display:none; margin-top:12px; padding:8px 16px; background:#e8f5e9; border-radius:8px; font-size:13px; color:var(--success);">成绩已保存！</div>
+    </div>
+
+    <div class="daily-checklist">
+      <h3 style="font-family:'Noto Serif SC',serif; font-size:18px; color:var(--primary); margin-bottom:8px;">今日学习打卡</h3>
+      <div class="daily-date" id="daily-date"></div>
+      <div class="daily-checklist-items" id="daily-checklist-items">
+        <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-english-am')"></div><span class="task-text">英语晨读 06:50-07:10</span></div>
+        <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-english')"></div><span class="task-text">英语 晚间练习 18:50-19:20</span></div>
+        <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-math')"></div><span class="task-text">数学 作业+拔高 19:20-20:00</span></div>
+        <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-physics')"></div><span class="task-text">物理 作业+错题 20:00-20:30</span></div>
+        <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-chinese')"></div><span class="task-text">语文 阅读/积累 20:40-21:05</span></div>
+        <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-minor')"></div><span class="task-text">小科轮换 21:05-21:40</span></div>
+        <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-review')"></div><span class="task-text">错题整理+预习 21:40-21:55</span></div>
+        <div class="task-item"><div class="task-checkbox" onclick="toggleDailyTask(this,'d-sleep')"></div><span class="task-text">22:15前入睡</span></div>
+      </div>
+      <div id="daily-complete-tip" style="display:none; margin-top:12px; padding:10px 16px; background:#e8f5e9; border-radius:8px; font-size:13px; color:var(--success); font-weight:600;">今日全部完成！太棒了！</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. 通向哈工大 ===== -->
+<section id="sec-path" style="background:#1a3a5c; color:#fff;">
+  <div class="container">
+    <div class="section-title">
+      <span class="num" style="background:var(--accent);">6</span>
+      <h2 style="color:var(--accent-light);">通向哈工大的升学路径</h2>
+      <span class="line" style="background:linear-gradient(90deg, var(--accent), transparent);"></span>
+    </div>
+
+    <div class="path-container" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">
+      <p style="font-size:15px; line-height:1.8; opacity:0.9;">
+        哈尔滨工业大学（哈工大）是C9联盟高校、"985/211/双一流"名校，以工科见长，尤其在航天、力学、计算机、机械等领域全国顶尖。<b style="color:var(--accent-light);">哈工大65%以上专业要求选考"物理+化学"</b>，从初二到哈工大，需走过以下关键阶段：
+      </p>
+
+      <div class="path-steps">
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(52,152,219,0.3);">
+          <div class="step-num">①</div>
+          <h4 style="color:var(--accent-light);">初二（2026.09-2027.06）</h4>
+          <p style="opacity:0.8;">主科突破93+，数学96+/物理93+建立数理特长，地理生物会考双A，年级排名进入前列</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(155,89,182,0.3);">
+          <div class="step-num">②</div>
+          <h4 style="color:var(--accent-light);">2028.05 学科特长生</h4>
+          <p style="opacity:0.8;">参加南师附中/金陵中学数学或物理学科特长生加试（公共卷语90+数120+英80+物110 + 特长卷20），零志愿提前录取</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(212,160,23,0.4);">
+          <div class="step-num">③</div>
+          <h4 style="color:var(--accent-light);">高中选科（2028.09）</h4>
+          <p style="opacity:0.8;"><b style="color:var(--accent-light);">首选物理 + 再选化学</b>（哈工大65%专业要求物化），冲击数学/物理竞赛省奖，同步备战高考</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(39,174,96,0.3);">
+          <div class="step-num">④</div>
+          <h4 style="color:var(--accent-light);">高中三年（2028-2031）</h4>
+          <p style="opacity:0.8;">保持年级前5%，数学物理绝对优势。关注哈工大强基计划招生简章（每年4月发布），竞赛冲击省一等奖</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="path-step" style="background:rgba(255,255,255,0.08); border:2px solid rgba(192,57,43,0.3);">
+          <div class="step-num">⑤</div>
+          <h4 style="color:var(--accent-light);">2031高考 目标660+</h4>
+          <p style="opacity:0.8;">通过强基计划（高考85%+校考15%）或纯高考录取哈工大校本部。2025年本部物理类最低663分，尖班668+</p>
+        </div>
+      </div>
+
+      <div style="margin-top:30px; padding:20px; background:rgba(212,160,23,0.1); border-radius:10px; border:1px solid rgba(212,160,23,0.3);">
+        <h4 style="color:var(--accent-light); font-size:16px; margin-bottom:10px;">哈工大升学通道详解（基于2025年江苏录取数据）</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:13px; line-height:1.7;">
+          <div>
+            <p style="color:var(--accent-light); font-weight:600; margin-bottom:6px;">路线A：强基计划（首选推荐）</p>
+            <p style="opacity:0.85;">高考成绩占85%+校考占15%。哈工大强基招生专业含数学/物理/化学/工程力学/核工程等。2025年本部尖班录取分668、AI院士特色班668-669、未来技术拔尖班664。<b style="color:var(--accent-light);">初二打好数理基础即为此铺路。</b></p>
+          </div>
+          <div>
+            <p style="color:var(--accent-light); font-weight:600; margin-bottom:6px;">路线B：纯高考录取（主路径）</p>
+            <p style="opacity:0.85;">2025年校本部物理类（物+化）：最高672、平均666.5、最低663；2026年本部最高投档666/位次1964。深圳校区最低658，威海校区最低650（可作保底）。<b style="color:var(--accent-light);">高考目标660+，稳进本部工科试验班。</b></p>
+          </div>
+          <div>
+            <p style="color:var(--accent-light); font-weight:600; margin-bottom:6px;">路线C：学科竞赛保送</p>
+            <p style="opacity:0.85;">五大学科竞赛全国决赛金牌且入选国家集训队可直接保送。难度极高，但学科特长生路径为此奠定基础。高中全力投入数学或物理竞赛，冲击省一等奖以上。</p>
+          </div>
+          <div>
+            <p style="color:var(--accent-light); font-weight:600; margin-bottom:6px;">路线D：中外合作办学（保底路线）</p>
+            <p style="opacity:0.85;">2025年校本部数学与应用数学（中外合作）最低642、应用物理学（中外合作）最低640、大数据管理与应用最低639。选科要求物理+化学。分数略低但毕业证与本部一致，<b style="color:var(--accent-light);">可作为高考发挥不理想时的保底选择。</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; padding:16px 20px; background:rgba(52,152,219,0.1); border-radius:10px; border:1px solid rgba(52,152,219,0.25);">
+        <h4 style="color:#5dade2; font-size:15px; margin-bottom:8px;">选科策略：物理 + 化学（必选组合）</h4>
+        <p style="font-size:13px; opacity:0.85; line-height:1.7;">哈工大65%以上专业要求"物理+化学"双选，涵盖工科试验班（尖班/AI院士班/未来技术班等核心专业）。初三化学须同步发力，确保高中化学基础扎实。其余选考科目建议生物（与数理交叉性强）或地理（已具98%优势），具体以高一兴趣和成绩为准。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. 执行保障 ===== -->
+<section id="sec-tips">
+  <div class="container">
+    <div class="section-title">
+      <span class="num">7</span>
+      <h2>执行保障 & 关键提醒</h2>
+      <span class="line"></span>
+    </div>
+
+    <div class="tips-grid">
+      <div class="tip-card">
+        <h4>📋 错题本是第一生产力</h4>
+        <p>每科一本错题本，格式统一：原题→错因→正确解法→知识点标签→日期。每周日重做本周错题，每月底重做本月错题。坚持一年，至少积累1000道错题，成绩不可能不提升。</p>
+      </div>
+      <div class="tip-card">
+        <h4>🎯 课堂效率决定上限</h4>
+        <p>所有课外补习都不能替代课堂45分钟。上课做到：眼到（看板书）、手到（记笔记）、心到（跟着老师思路走）、口到（积极回答问题）。课堂效率高的学生，课后只需1/3的时间就能完成同等任务。</p>
+      </div>
+      <div class="tip-card">
+        <h4>😴 睡眠是学习的地基</h4>
+        <p>每天保证8小时睡眠（22:00-06:30）。熬夜学习的效率极低，还会影响第二天课堂。初中阶段大脑仍在发育，睡眠不足会直接影响记忆巩固和注意力。宁可少做2道题，也要按时入睡。</p>
+      </div>
+      <div class="tip-card">
+        <h4>🏃 运动提升脑力</h4>
+        <p>每天30分钟有氧运动（跳绳/慢跑/骑车），能显著提升记忆力和专注力。运动时大脑分泌BDNF（脑源性神经营养因子），是"大脑的肥料"。周末安排1小时运动时间，比多做1小时题更划算。</p>
+      </div>
+      <div class="tip-card">
+        <h4>📱 手机/电子产品管理</h4>
+        <p>上学日不碰手机（交给家长保管），周末每天不超过30分钟。短视频/社交媒体会严重碎片化注意力，降低深度思考能力。用纸质书替代电子阅读，用手表替代手机看时间。</p>
+      </div>
+      <div class="tip-card">
+        <h4>👨‍👩‍👧 家长配合要点</h4>
+        <p>①定期与各科老师沟通，了解课堂表现和薄弱点；②帮孩子整理打印往年真题/模拟卷；③营造安静学习环境，孩子学习时家长不看手机不看电视；④关注情绪变化，考试失利时多鼓励少批评；⑤尽早确认中考报名资格（户籍问题）。</p>
+      </div>
+      <div class="tip-card">
+        <h4>📊 月度复盘机制</h4>
+        <p>每月最后一个周末，做"月度复盘"：各科本月做了什么、进步了多少、还差什么、下月调整什么。用数据说话——记录每次考试分数，画进步曲线图。看到曲线上升是最好的动力。</p>
+      </div>
+      <div class="tip-card">
+        <h4>🧠 费曼学习法</h4>
+        <p>学完一个知识点后，尝试用自己的话给同学/家长讲一遍。如果能讲清楚，说明真懂了；如果讲不清楚，说明还有盲区。这是最高效的学习验证方法，比做题更能暴露理解漏洞。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="container">
+    <p>初二学年学习计划 · 2026.09 - 2027.08</p>
+    <p style="margin-top:6px;">目标：<strong>全科优秀 → 学科特长生 → 名校高中 → 物化选科 → 高考660+ → 哈工大</strong></p>
+    <p style="margin-top:6px; opacity:0.7;">计划的价值在于执行 · 执行的关键在于坚持 · 坚持的动力来自目标</p>
+  </div>
+</div>
+
+<!-- ===== FLOATING PROGRESS TRACKER ===== -->
+<div class="progress-float" id="progress-float">
+  <div class="progress-float-header" onclick="toggleProgressFloat()">
+    <span class="progress-float-title">📊 学习进度</span>
+    <button class="progress-float-toggle">▼</button>
+  </div>
+  <div class="progress-bar-overall">
+    <div class="progress-bar-fill" id="overall-fill" style="width:0%"></div>
+  </div>
+  <div class="progress-label" id="overall-label">总进度 0%</div>
+  <div id="progress-sections"></div>
+</div>
+
+<script>
+// ===== 学科标签切换 =====
+function showSubject(e, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.subject-panel').forEach(p => p.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// ===== 导航栏滚动 =====
+function scrollToSection(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    var offset = 52;
+    var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+}
+
+// 滚动时高亮当前导航
+window.addEventListener('scroll', function() {
+  var sections = document.querySelectorAll('section[id]');
+  var navBtns = document.querySelectorAll('.nav-btn');
+  var current = '';
+  sections.forEach(function(s) {
+    if (window.pageYOffset >= s.offsetTop - 80) current = s.id;
+  });
+  navBtns.forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('onclick') && b.getAttribute('onclick').indexOf(current) > -1);
+  });
+});
+
+// ===== 成绩追踪 =====
+var scoreSubjects = [
+  { name: '语文', full: 100, current: 81.5, target: 93 },
+  { name: '数学', full: 100, current: 83.5, target: 96 },
+  { name: '英语', full: 100, current: 84, target: 95 },
+  { name: '物理', full: 100, current: null, target: 93 },
+  { name: '地理', full: 50, current: 49, target: 50 },
+  { name: '生物', full: 50, current: 47, target: 48 },
+  { name: '政治', full: 60, current: 44, target: 54 },
+  { name: '历史', full: 60, current: 55, target: 57 }
+];
+
+function renderScoreTracker() {
+  var saved = JSON.parse(localStorage.getItem('scoreTracker') || '{}');
+  var html = '';
+  scoreSubjects.forEach(function(s, i) {
+    var val = saved[s.name] !== undefined ? saved[s.name] : '';
+    var pct = val !== '' ? Math.min(100, (parseFloat(val) / s.target) * 100) : 0;
+    var diff = val !== '' ? (parseFloat(val) - s.target).toFixed(1) : '—';
+    var diffColor = val !== '' && parseFloat(val) >= s.target ? 'var(--success)' : 'var(--danger)';
+    var barColor = pct >= 100 ? 'var(--success)' : pct >= 70 ? 'var(--accent)' : 'var(--warning)';
+    html += '<div class="score-input-row">' +
+      '<span class="score-input-label">' + s.name + '</span>' +
+      '<span class="score-input-target">目标' + s.target + '</span>' +
+      '<input type="number" class="score-input-field" id="score-' + i + '" placeholder="' + (s.current || '—') + '" value="' + val + '" onchange="updateScoreRow(' + i + ')">' +
+      '<span class="score-input-diff" id="diff-' + i + '" style="color:' + diffColor + '">' + (diff > 0 ? '+' : '') + diff + '</span>' +
+      '<div class="score-input-bar"><div class="score-input-fill" id="fill-' + i + '" style="width:' + pct + '%; background:' + barColor + '"></div></div>' +
+      '</div>';
+  });
+  document.getElementById('score-tracker-list').innerHTML = html;
+}
+
+function updateScoreRow(i) {
+  var input = document.getElementById('score-' + i);
+  var val = parseFloat(input.value);
+  var s = scoreSubjects[i];
+  var diffEl = document.getElementById('diff-' + i);
+  var fillEl = document.getElementById('fill-' + i);
+  if (isNaN(val)) {
+    diffEl.textContent = '—';
+    diffEl.style.color = 'var(--text-light)';
+    fillEl.style.width = '0%';
+    return;
+  }
+  var diff = (val - s.target).toFixed(1);
+  var pct = Math.min(100, (val / s.target) * 100);
+  diffEl.textContent = (diff > 0 ? '+' : '') + diff;
+  diffEl.style.color = val >= s.target ? 'var(--success)' : 'var(--danger)';
+  fillEl.style.width = pct + '%';
+  fillEl.style.background = pct >= 100 ? 'var(--success)' : pct >= 70 ? 'var(--accent)' : 'var(--warning)';
+}
+
+function saveScores() {
+  var data = {};
+  scoreSubjects.forEach(function(s, i) {
+    var input = document.getElementById('score-' + i);
+    if (input.value !== '') data[s.name] = parseFloat(input.value);
+  });
+  localStorage.setItem('scoreTracker', JSON.stringify(data));
+  var tip = document.getElementById('score-saved-tip');
+  tip.style.display = 'block';
+  setTimeout(function() { tip.style.display = 'none'; }, 2000);
+}
+
+function resetScores() {
+  if (confirm('确定清空所有成绩？')) {
+    localStorage.removeItem('scoreTracker');
+    renderScoreTracker();
+  }
+}
+
+// ===== 每日打卡 =====
+function getTodayKey() {
+  var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+
+function renderDailyDate() {
+  var days = ['日','一','二','三','四','五','六'];
+  var d = new Date();
+  document.getElementById('daily-date').textContent = d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日 周' + days[d.getDay()];
+}
+
+function toggleDailyTask(el, key) {
+  el.classList.toggle('checked');
+  var todayKey = 'daily_' + getTodayKey();
+  var saved = JSON.parse(localStorage.getItem(todayKey) || '{}');
+  saved[key] = el.classList.contains('checked');
+  localStorage.setItem(todayKey, JSON.stringify(saved));
+  updateDailyProgress();
+}
+
+function loadDailyTasks() {
+  var todayKey = 'daily_' + getTodayKey();
+  var saved = JSON.parse(localStorage.getItem(todayKey) || '{}');
+  var items = document.querySelectorAll('#daily-checklist-items .task-checkbox');
+  items.forEach(function(el, i) {
+    var key = el.getAttribute('onclick').match(/'([^']+)'/)[1];
+    if (saved[key]) el.classList.add('checked');
+  });
+  updateDailyProgress();
+}
+
+function updateDailyProgress() {
+  var items = document.querySelectorAll('#daily-checklist-items .task-checkbox');
+  var done = document.querySelectorAll('#daily-checklist-items .task-checkbox.checked');
+  var pct = Math.round((done.length / items.length) * 100);
+  var tip = document.getElementById('daily-complete-tip');
+  tip.style.display = done.length === items.length ? 'block' : 'none';
+  updateProgress('每日打卡', pct);
+}
+
+// ===== 浮动进度面板 =====
+function toggleProgressFloat() {
+  document.getElementById('progress-float').classList.toggle('collapsed');
+}
+
+var progressData = {};
+
+function updateProgress(name, pct) {
+  progressData[name] = pct;
+  renderProgressFloat();
+}
+
+function renderProgressFloat() {
+  var total = 0, count = 0;
+  for (var k in progressData) { total += progressData[k]; count++; }
+  var overall = count > 0 ? Math.round(total / count) : 0;
+  document.getElementById('overall-fill').style.width = overall + '%';
+  document.getElementById('overall-label').textContent = '总进度 ' + overall + '%';
+
+  var html = '';
+  for (var k in progressData) {
+    html += '<div class="progress-section-row">' +
+      '<span class="progress-section-name">' + k + '</span>' +
+      '<span class="progress-section-val">' + progressData[k] + '%</span>' +
+      '</div>';
+  }
+  document.getElementById('progress-sections').innerHTML = html;
+}
+
+// ===== 初始化 =====
+renderScoreTracker();
+renderDailyDate();
+loadDailyTasks();
+renderProgressFloat();
+
+// 检查每日打卡是否过期（新的一天清空旧数据）
+(function checkDailyReset() {
+  var todayKey = 'daily_' + getTodayKey();
+  if (!localStorage.getItem(todayKey)) {
+    var keys = Object.keys(localStorage).filter(function(k) { return k.indexOf('daily_') === 0; });
+    keys.forEach(function(k) { if (k !== todayKey) localStorage.removeItem(k); });
+  }
+})();
+</script>
+
+</body>
+</html>
